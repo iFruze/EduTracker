@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="64a1f3d29dc44b52adec20d47cc3e86b" Name="Diagram1">
+        <EntityTypeShape EntityType="TeachHoursModel1.AllHours" Width="1.5" PointX="3" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TeachHoursModel1.Dates" Width="1.5" PointX="3" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="TeachHoursModel1.Hours" Width="1.5" PointX="5.25" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TeachHoursModel1.Subjects" Width="1.5" PointX="3" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="TeachHoursModel1.sysdiagrams" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TeachHoursModel1.Teachers" Width="1.5" PointX="0.75" PointY="3.875" IsExpanded="true" />
+        <AssociationConnector Association="TeachHoursModel1.FK_AllHours_Teachers" ManuallyRouted="false" />
+        <AssociationConnector Association="TeachHoursModel1.FK_Hours_Dates" ManuallyRouted="false" />
+        <AssociationConnector Association="TeachHoursModel1.FK_Hours_Subjects" ManuallyRouted="false" />
+        <AssociationConnector Association="TeachHoursModel1.FK_Hours_Teachers" ManuallyRouted="false" />
+        <AssociationConnector Association="TeachHoursModel1.FK_Subjects_Teachers" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

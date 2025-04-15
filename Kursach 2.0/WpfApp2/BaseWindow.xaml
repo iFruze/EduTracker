@@ -1,0 +1,99 @@
+﻿<Window x:Class="WpfApp2.BaseWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp2"
+        mc:Ignorable="d"
+        Title="BaseWindow" Height="700" Width="900" Loaded="Base_Load" ResizeMode="NoResize" Closing="Window_Close">
+    <Grid>
+        <TabControl FontFamily="Arial" FontSize="16">
+            <TabItem Header="Раписание">
+                <Grid Background="#FFE5E5E5">
+                    <DataGrid Name="SourceGrid" Margin="0,44,0,327" AutoGenerateColumns="False"/>
+                    <Button Name="SaveFile" Content="Сохранить расписание в файл" HorizontalAlignment="Left" Margin="10,458,0,0" VerticalAlignment="Top" Height="27" Width="249" FontFamily="Arial" FontSize="16" Click="SaveFile_Click"/>
+                    <Button Name="SaveDB" Content="Сохранить расписание для отчёта" HorizontalAlignment="Left" Margin="274,458,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="16" Height="27" Width="288" Click="SaveDB_Click"/>
+                    <Button Name="LoadButton" Content="Загрузить расписание" HorizontalAlignment="Left" Margin="10,413,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="16" Width="180" Height="27" Click="LoadButton_Click" Background="#FFDDDDDD"/>
+                    <Button ToolTip="Загрузить предыдущую неделю" Name="Prev" Content="&lt;" HorizontalAlignment="Left" Margin="12,346,0,0" VerticalAlignment="Top" Width="178" Click="Prev_Click" FontFamily="Arial Black"/>
+                    <Button ToolTip="Загрузить следующую неделю" Name="Next" Content="&gt;" HorizontalAlignment="Left" Margin="207,346,0,0" VerticalAlignment="Top" Width="180" Click="Next_Click" FontFamily="Arial Black" Background="#FFDDDDDD"/>
+                    <Label Name="WeekName" Content="///" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" FontFamily="Arial Black" FontSize="16"/>
+                    <Label Name="FileName" Content="" HorizontalAlignment="Left" Margin="12,318,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="16"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Часы" Height="22" VerticalAlignment="Top">
+                <Grid Background="#FFE5E5E5">
+                    <DataGrid Name="HoursGrid" AutoGenerateColumns="False" Margin="0,0,230,187">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="id" IsReadOnly="True" Binding="{Binding Id}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Название предмета" Binding="{Binding Subject}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Дата" Binding="{Binding Date}"></DataGridTextColumn>
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Content="Сохранить изменения" Click="SaveButton_Click"></Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Button Name="DeleteButton" Content="Удалить выбранные часы" HorizontalAlignment="Left" Margin="4,472,0,0" VerticalAlignment="Top" Height="34" Width="305" Click="DeleteButton_Click"/>
+                    <Button Content="Добавить час" HorizontalAlignment="Left" Margin="320,472,0,0" VerticalAlignment="Top" Height="34" Width="182" Click="ButtonAddHour_Click"/>
+                    <Label Content="Фильтры:" HorizontalAlignment="Left" Margin="681,2,0,0" VerticalAlignment="Top" FontFamily="Arial Black"/>
+                    <Button x:Name="FilterButton" Content="Применить фильтры" HorizontalAlignment="Left" Margin="690,349,0,0" VerticalAlignment="Top" Height="28" Click="FilterButton_Click" Width="181"/>
+                    <DatePicker x:Name="PickerStart" HorizontalAlignment="Left" Margin="721,170,0,0" VerticalAlignment="Top"/>
+                    <DatePicker x:Name="PickerEnd" HorizontalAlignment="Left" Margin="721,201,0,0" VerticalAlignment="Top"/>
+                    <Label Content="С: " HorizontalAlignment="Left" Margin="690,169,0,0" VerticalAlignment="Top"/>
+                    <Label Content="По:" HorizontalAlignment="Left" Margin="685,199,0,0" VerticalAlignment="Top"/>
+                    <Button Name="ClearFilters" Content="Очистить фильтры" HorizontalAlignment="Left" Margin="690,0,0,0" VerticalAlignment="Center" Click="ClearFilters_Click" Height="28" Width="181"/>
+                    <ListView Name="ViewSubjects" Margin="685,39,23,495" SelectionMode="Multiple">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Предмет"></GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <ComboBox Name="GroupsBox" HorizontalAlignment="Left" Margin="690,266,0,0" VerticalAlignment="Top" Width="181" Height="29"/>
+                    <Label Content="Группа:" HorizontalAlignment="Left" Margin="690,233,0,0" VerticalAlignment="Top"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Отчёт">
+                <Grid Background="#FFE5E5E5">
+                    <Label Content="Месяц и год, по которому необходимо составить отчёт:" HorizontalAlignment="Left" Margin="6,8,0,0" VerticalAlignment="Top" FontFamily="Arial Black"/>
+                    <Button Name="ReportButton" Content="Составить отчёт" HorizontalAlignment="Left" Margin="296,90,0,0" VerticalAlignment="Top" Height="33" Width="164" Click="ReportButton_Click"/>
+                    <ComboBox Name="MonthBox" HorizontalAlignment="Left" Margin="8,90,0,0" VerticalAlignment="Top" Width="143" Height="33"/>
+                    <ComboBox Name="YearBox"  HorizontalAlignment="Left" Margin="163,90,0,0" VerticalAlignment="Top" Width="120" Height="33"/>
+                    <Label Content="Месяц:" HorizontalAlignment="Left" Margin="8,61,0,0" VerticalAlignment="Top" FontFamily="Arial Black"/>
+                    <Label Content="Год:" HorizontalAlignment="Left" Margin="163,61,0,0" VerticalAlignment="Top" FontFamily="Arial Black"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Профиль">
+                <Grid Background="#FFE5E5E5">
+                    <Image HorizontalAlignment="Left" Height="193" Margin="10,10,0,0" VerticalAlignment="Top" Width="198" Source="/Images/user.jpg"/>
+                    <Label Content="Логин:" HorizontalAlignment="Left" Margin="217,40,0,0" VerticalAlignment="Top" FontFamily="Arial Black" FontSize="16"/>
+                    <Label Content="Новый пароль:" HorizontalAlignment="Left" Margin="217,129,0,0" VerticalAlignment="Top" FontFamily="Arial Black" FontSize="16"/>
+                    <TextBox Name="LoginBox" HorizontalAlignment="Left" Margin="372,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="289" Height="28" FontFamily="Arial" FontSize="16" IsEnabled="False"/>
+                    <TextBox Name="NewPassBox" HorizontalAlignment="Left" Margin="372,131,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="289" Height="28" FontFamily="Arial" FontSize="16"/>
+                    <Button Name="SavePassButton" Content="Сохранить" HorizontalAlignment="Left" Margin="676,132,0,0" VerticalAlignment="Top" Width="98" Height="26" FontFamily="Arial" FontSize="16" Click="SavePassButton_Click"/>
+                    <Label Content="Ссылка для расписания:" HorizontalAlignment="Left" Margin="10,222,0,0" VerticalAlignment="Top" FontFamily="Arial Black" FontSize="16"/>
+                    <TextBox x:Name="UrlBox" HorizontalAlignment="Left" Margin="252,225,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="409" Height="43" FontFamily="Arial" FontSize="16"/>
+                    <Button x:Name="SaveUrlButton" Content="Сохранить" HorizontalAlignment="Left" Margin="676,226,0,0" VerticalAlignment="Top" Width="98" Height="26" FontFamily="Arial" FontSize="16" Click="SaveUrlButton_Click"/>
+                    <DataGrid Name="ResultGrid" AutoGenerateColumns="False" Margin="10,353,0,10">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding subjectName}" IsReadOnly="True" Header="Предмет"></DataGridTextColumn>
+                            <DataGridTextColumn Binding="{Binding countHours}" Header="Общее количество часов"></DataGridTextColumn>
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Name="ChangeHours" Click="ChangeHour_Click" Content="Сохранить"></Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Label Content="Предметы, которые вы ведёте:" HorizontalAlignment="Left" Margin="10,318,0,0" VerticalAlignment="Top" FontFamily="Arial Black" FontSize="16"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+    </Grid>
+</Window>

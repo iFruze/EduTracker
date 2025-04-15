@@ -1,0 +1,152 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TeachHoursModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Dates">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="Hours" Relationship="Self.FK_Hours_Dates" FromRole="Dates" ToRole="Hours" />
+  </EntityType>
+  <EntityType Name="Hours">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="subjectId" Type="Int32" Nullable="false" />
+    <Property Name="dateId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Dates" Relationship="Self.FK_Hours_Dates" FromRole="Hours" ToRole="Dates" />
+    <NavigationProperty Name="Subjects" Relationship="Self.FK_Hours_Subjects" FromRole="Hours" ToRole="Subjects" />
+    <Property Name="teacherId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Teachers" Relationship="TeachHoursModel.FK_Hours_Teachers" FromRole="Hours" ToRole="Teachers" />
+  </EntityType>
+  <EntityType Name="Subjects">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="teacherId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Hours" Relationship="Self.FK_Hours_Subjects" FromRole="Subjects" ToRole="Hours" />
+    <NavigationProperty Name="Teachers" Relationship="Self.FK_Subjects_Teachers" FromRole="Subjects" ToRole="Teachers" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Teachers">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="login" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="url" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Subjects" Relationship="Self.FK_Subjects_Teachers" FromRole="Teachers" ToRole="Subjects" />
+    <NavigationProperty Name="Hours" Relationship="TeachHoursModel.FK_Hours_Teachers" FromRole="Teachers" ToRole="Hours" />
+    <NavigationProperty Name="AllHours" Relationship="TeachHoursModel.FK_AllHours_Teachers" FromRole="Teachers" ToRole="AllHours" />
+  </EntityType>
+  <Association Name="FK_Hours_Dates">
+    <End Role="Dates" Type="Self.Dates" Multiplicity="1" />
+    <End Role="Hours" Type="Self.Hours" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Dates">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Hours">
+        <PropertyRef Name="dateId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Hours_Subjects">
+    <End Role="Subjects" Type="Self.Subjects" Multiplicity="1" />
+    <End Role="Hours" Type="Self.Hours" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Subjects">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Hours">
+        <PropertyRef Name="subjectId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Subjects_Teachers">
+    <End Role="Teachers" Type="Self.Teachers" Multiplicity="1" />
+    <End Role="Subjects" Type="Self.Subjects" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Teachers">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Subjects">
+        <PropertyRef Name="teacherId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="TeachHoursEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Dates" EntityType="Self.Dates" />
+    <EntitySet Name="Hours" EntityType="Self.Hours" />
+    <EntitySet Name="Subjects" EntityType="Self.Subjects" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="Teachers" EntityType="Self.Teachers" />
+    <AssociationSet Name="FK_Hours_Dates" Association="Self.FK_Hours_Dates">
+      <End Role="Dates" EntitySet="Dates" />
+      <End Role="Hours" EntitySet="Hours" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Hours_Subjects" Association="Self.FK_Hours_Subjects">
+      <End Role="Subjects" EntitySet="Subjects" />
+      <End Role="Hours" EntitySet="Hours" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Subjects_Teachers" Association="Self.FK_Subjects_Teachers">
+      <End Role="Teachers" EntitySet="Teachers" />
+      <End Role="Subjects" EntitySet="Subjects" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Hours_Teachers" Association="TeachHoursModel.FK_Hours_Teachers">
+      <End Role="Teachers" EntitySet="Teachers" />
+      <End Role="Hours" EntitySet="Hours" />
+    </AssociationSet>
+    <EntitySet Name="AllHours" EntityType="TeachHoursModel.AllHours" />
+    <AssociationSet Name="FK_AllHours_Teachers" Association="TeachHoursModel.FK_AllHours_Teachers">
+      <End Role="Teachers" EntitySet="Teachers" />
+      <End Role="AllHours" EntitySet="AllHours" />
+    </AssociationSet>
+  </EntityContainer>
+  <Association Name="FK_Hours_Teachers">
+    <End Type="TeachHoursModel.Teachers" Role="Teachers" Multiplicity="0..1" />
+    <End Type="TeachHoursModel.Hours" Role="Hours" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Teachers">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Hours">
+        <PropertyRef Name="teacherId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="AllHours">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="subjectName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="teacherId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Teachers" Relationship="TeachHoursModel.FK_AllHours_Teachers" FromRole="AllHours" ToRole="Teachers" />
+  </EntityType>
+  <Association Name="FK_AllHours_Teachers">
+    <End Type="TeachHoursModel.Teachers" Role="Teachers" Multiplicity="1" />
+    <End Type="TeachHoursModel.AllHours" Role="AllHours" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Teachers">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="AllHours">
+        <PropertyRef Name="teacherId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
