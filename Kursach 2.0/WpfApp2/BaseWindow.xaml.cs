@@ -20,6 +20,7 @@ using System.Security.Cryptography;
 using Microsoft.Office.Interop.Word;
 using System.Net.NetworkInformation;
 using System.Diagnostics;
+using WpfApp2.Classes;
 
 namespace WpfApp2
 {
@@ -88,18 +89,6 @@ namespace WpfApp2
                     }
                 }
             }
-        }
-        private DataTemplate CreateButtonTemplate()
-        {
-            var buttonFactory = new FrameworkElementFactory(typeof(Button));
-            buttonFactory.SetValue(Button.ContentProperty, "Сохранить изменения");
-            buttonFactory.AddHandler(Button.ClickEvent, new RoutedEventHandler(SaveButton_Click));
-            buttonFactory.SetBinding(Button.TagProperty, new Binding());
-
-            var dataTemplate = new DataTemplate();
-            dataTemplate.VisualTree = buttonFactory;
-
-            return dataTemplate;
         }
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
@@ -965,7 +954,8 @@ namespace WpfApp2
                         doc.SaveAs2(file);
                         doc.Close();
                         word.Quit();
-                        MessageBox.Show("Успешно!");
+                        CreateAllHoursTable();
+                        MessageBox.Show("Отчёт успешно сохранён!", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
                     }
                 }
                 else
@@ -1519,7 +1509,8 @@ namespace WpfApp2
         }
         public void CreateTeachFolder(int id)
         {
-            var teachLogin = TeachHoursEntities2.GetContext().Teachers.FirstOrDefault(t=>t.id==id).login;
+            var teach = TeachersRepository.GetTeacherById(id);
+            var teachLogin = teach.login;
             string projectDir = AppDomain.CurrentDomain.BaseDirectory;
             string dir = System.IO.Path.Combine(projectDir, $"Расписание\\{teachLogin}");
             if (!Directory.Exists(dir))

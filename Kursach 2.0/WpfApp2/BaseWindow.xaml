@@ -9,20 +9,75 @@
     <Grid>
         <TabControl FontFamily="Arial" FontSize="16">
             <TabItem Header="Раписание">
-                <Grid Background="#FFE5E5E5">
-                    <DataGrid Name="SourceGrid" Margin="0,44,0,327" AutoGenerateColumns="False"/>
-                    <Button Name="SaveFile" Content="Сохранить расписание в файл" HorizontalAlignment="Left" Margin="10,458,0,0" VerticalAlignment="Top" Height="27" Width="249" FontFamily="Arial" FontSize="16" Click="SaveFile_Click"/>
-                    <Button Name="SaveDB" Content="Сохранить расписание для отчёта" HorizontalAlignment="Left" Margin="274,458,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="16" Height="27" Width="288" Click="SaveDB_Click"/>
-                    <Button Name="LoadButton" Content="Загрузить расписание" HorizontalAlignment="Left" Margin="10,413,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="16" Width="180" Height="27" Click="LoadButton_Click" Background="#FFDDDDDD"/>
-                    <Button ToolTip="Загрузить предыдущую неделю" Name="Prev" Content="&lt;" HorizontalAlignment="Left" Margin="12,346,0,0" VerticalAlignment="Top" Width="178" Click="Prev_Click" FontFamily="Arial Black"/>
-                    <Button ToolTip="Загрузить следующую неделю" Name="Next" Content="&gt;" HorizontalAlignment="Left" Margin="207,346,0,0" VerticalAlignment="Top" Width="180" Click="Next_Click" FontFamily="Arial Black" Background="#FFDDDDDD"/>
+                <Grid Background="#FFB4BEBE">
+                    <DataGrid Name="SourceGrid" Margin="10,44,10,327" AutoGenerateColumns="False"/>
+                    <Button Name="SaveFile" Content="Сохранить расписание в файл" HorizontalAlignment="Center" Margin="0,487,0,0" VerticalAlignment="Top" Height="39" Width="603" FontFamily="Arial" FontSize="16" Click="SaveFile_Click" Foreground="White" BorderBrush="Black" Background="#FF4D4D4D">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Background" Value="#FF4D4D4D"></Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="Black"></Setter>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                    <Button Name="SaveDB" Content="Сохранить расписание для отчёта" HorizontalAlignment="Center" Margin="0,550,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="16" Height="39" Width="603" Click="SaveDB_Click" Background="#FF4D4D4D" BorderBrush="Black" Foreground="White">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Background" Value="#FF4D4D4D"></Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="Black"></Setter>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                    <Button Name="LoadButton" Content="Загрузить расписание" HorizontalAlignment="Center" Margin="0,421,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="16" Width="603" Height="39" Click="LoadButton_Click" Background="#FF4D4D4D" BorderBrush="Black" Foreground="White" RenderTransformOrigin="0.5,0.5">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Background" Value="#FF4D4D4D"></Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="Black"></Setter>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                    <Button ToolTip="Загрузить предыдущую неделю" Name="Prev" Content="&lt;" HorizontalAlignment="Left" Margin="12,346,0,0" VerticalAlignment="Top" Width="178" Click="Prev_Click" FontFamily="Arial Black" Background="#FF4D4D4D" BorderBrush="Black" Foreground="White">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Background" Value="#FF4D4D4D"></Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="Black"></Setter>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                    <Button ToolTip="Загрузить следующую неделю" Name="Next" Content="&gt;" HorizontalAlignment="Left" Margin="207,346,0,0" VerticalAlignment="Top" Width="180" Click="Next_Click" FontFamily="Arial Black" Background="#FF4D4D4D" Foreground="White" BorderBrush="Black">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Background" Value="#FF4D4D4D"></Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="Black"></Setter>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
                     <Label Name="WeekName" Content="///" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" FontFamily="Arial Black" FontSize="16"/>
                     <Label Name="FileName" Content="" HorizontalAlignment="Left" Margin="12,318,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="16"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Часы" Height="22" VerticalAlignment="Top">
-                <Grid Background="#FFE5E5E5">
-                    <DataGrid Name="HoursGrid" AutoGenerateColumns="False" Margin="0,0,230,187">
+                <Grid Background="#FFB4BEBE">
+                    <DataGrid Name="HoursGrid" AutoGenerateColumns="False" Margin="0,0,230,187" BorderBrush="Black">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="id" IsReadOnly="True" Binding="{Binding Id}"></DataGridTextColumn>
                             <DataGridTextColumn Header="Название предмета" Binding="{Binding Subject}"></DataGridTextColumn>
@@ -36,30 +91,85 @@
                             </DataGridTemplateColumn>
                         </DataGrid.Columns>
                     </DataGrid>
-                    <Button Name="DeleteButton" Content="Удалить выбранные часы" HorizontalAlignment="Left" Margin="4,472,0,0" VerticalAlignment="Top" Height="34" Width="305" Click="DeleteButton_Click"/>
-                    <Button Content="Добавить час" HorizontalAlignment="Left" Margin="320,472,0,0" VerticalAlignment="Top" Height="34" Width="182" Click="ButtonAddHour_Click"/>
+                    <Button Name="DeleteButton" Content="Удалить выбранные часы" HorizontalAlignment="Left" Margin="10,520,0,0" VerticalAlignment="Top" Height="34" Width="654" Click="DeleteButton_Click" Background="#FF4D4D4D" BorderBrush="Black" Foreground="White">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Background" Value="#FF4D4D4D"></Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="Black"></Setter>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                    <Button Content="Добавить час" HorizontalAlignment="Left" Margin="10,474,0,0" VerticalAlignment="Top" Height="34" Width="654" Click="ButtonAddHour_Click" Foreground="White" BorderBrush="Black" Background="#FF4D4D4D">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Background" Value="#FF4D4D4D"></Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="Black"></Setter>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
                     <Label Content="Фильтры:" HorizontalAlignment="Left" Margin="681,2,0,0" VerticalAlignment="Top" FontFamily="Arial Black"/>
-                    <Button x:Name="FilterButton" Content="Применить фильтры" HorizontalAlignment="Left" Margin="690,349,0,0" VerticalAlignment="Top" Height="28" Click="FilterButton_Click" Width="181"/>
-                    <DatePicker x:Name="PickerStart" HorizontalAlignment="Left" Margin="721,170,0,0" VerticalAlignment="Top"/>
-                    <DatePicker x:Name="PickerEnd" HorizontalAlignment="Left" Margin="721,201,0,0" VerticalAlignment="Top"/>
+                    <Button x:Name="FilterButton" Content="Применить фильтры" HorizontalAlignment="Left" Margin="690,349,0,0" VerticalAlignment="Top" Height="28" Click="FilterButton_Click" Width="173" Background="#FF4D4D4D" BorderBrush="Black" Foreground="White">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Background" Value="#FF4D4D4D"></Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="Black"></Setter>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                    <DatePicker x:Name="PickerStart" HorizontalAlignment="Left" Margin="721,170,0,0" VerticalAlignment="Top" Background="#FF4D4D4D" BorderBrush="Black"/>
+                    <DatePicker x:Name="PickerEnd" HorizontalAlignment="Left" Margin="721,201,0,0" VerticalAlignment="Top" BorderBrush="Black" Background="#FF4D4D4D"/>
                     <Label Content="С: " HorizontalAlignment="Left" Margin="690,169,0,0" VerticalAlignment="Top"/>
                     <Label Content="По:" HorizontalAlignment="Left" Margin="685,199,0,0" VerticalAlignment="Top"/>
-                    <Button Name="ClearFilters" Content="Очистить фильтры" HorizontalAlignment="Left" Margin="690,0,0,0" VerticalAlignment="Center" Click="ClearFilters_Click" Height="28" Width="181"/>
-                    <ListView Name="ViewSubjects" Margin="685,39,23,495" SelectionMode="Multiple">
+                    <Button Name="ClearFilters" Content="Очистить фильтры" HorizontalAlignment="Left" Margin="690,0,0,0" VerticalAlignment="Center" Click="ClearFilters_Click" Height="28" Width="173" Background="#FF4D4D4D" BorderBrush="Black" Foreground="White">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Background" Value="#FF4D4D4D"></Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="Black"></Setter>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                    <ListView Name="ViewSubjects" Margin="685,39,23,495" SelectionMode="Multiple" BorderBrush="Black" Foreground="White" Background="#FF4D4D4D">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Предмет"></GridViewColumn>
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <ComboBox Name="GroupsBox" HorizontalAlignment="Left" Margin="690,266,0,0" VerticalAlignment="Top" Width="181" Height="29"/>
+                    <ComboBox Name="GroupsBox" HorizontalAlignment="Left" Margin="690,266,0,0" VerticalAlignment="Top" Width="173" Height="29"/>
                     <Label Content="Группа:" HorizontalAlignment="Left" Margin="690,233,0,0" VerticalAlignment="Top"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Отчёт">
-                <Grid Background="#FFE5E5E5">
+                <Grid Background="#FFB4BEBE">
                     <Label Content="Месяц и год, по которому необходимо составить отчёт:" HorizontalAlignment="Left" Margin="6,8,0,0" VerticalAlignment="Top" FontFamily="Arial Black"/>
-                    <Button Name="ReportButton" Content="Составить отчёт" HorizontalAlignment="Left" Margin="296,90,0,0" VerticalAlignment="Top" Height="33" Width="164" Click="ReportButton_Click"/>
+                    <Button Name="ReportButton" Content="Составить отчёт" HorizontalAlignment="Left" Margin="296,90,0,0" VerticalAlignment="Top" Height="33" Width="164" Click="ReportButton_Click" BorderBrush="Black" Background="#FF4D4D4D" Foreground="White">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Background" Value="#FF4D4D4D"></Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="Black"></Setter>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
                     <ComboBox Name="MonthBox" HorizontalAlignment="Left" Margin="8,90,0,0" VerticalAlignment="Top" Width="143" Height="33"/>
                     <ComboBox Name="YearBox"  HorizontalAlignment="Left" Margin="163,90,0,0" VerticalAlignment="Top" Width="120" Height="33"/>
                     <Label Content="Месяц:" HorizontalAlignment="Left" Margin="8,61,0,0" VerticalAlignment="Top" FontFamily="Arial Black"/>
@@ -67,17 +177,39 @@
                 </Grid>
             </TabItem>
             <TabItem Header="Профиль">
-                <Grid Background="#FFE5E5E5">
+                <Grid Background="#FFB4BEBE">
                     <Image HorizontalAlignment="Left" Height="193" Margin="10,10,0,0" VerticalAlignment="Top" Width="198" Source="/Images/user.jpg"/>
                     <Label Content="Логин:" HorizontalAlignment="Left" Margin="217,40,0,0" VerticalAlignment="Top" FontFamily="Arial Black" FontSize="16"/>
                     <Label Content="Новый пароль:" HorizontalAlignment="Left" Margin="217,129,0,0" VerticalAlignment="Top" FontFamily="Arial Black" FontSize="16"/>
-                    <TextBox Name="LoginBox" HorizontalAlignment="Left" Margin="372,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="289" Height="28" FontFamily="Arial" FontSize="16" IsEnabled="False"/>
-                    <TextBox Name="NewPassBox" HorizontalAlignment="Left" Margin="372,131,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="289" Height="28" FontFamily="Arial" FontSize="16"/>
-                    <Button Name="SavePassButton" Content="Сохранить" HorizontalAlignment="Left" Margin="676,132,0,0" VerticalAlignment="Top" Width="98" Height="26" FontFamily="Arial" FontSize="16" Click="SavePassButton_Click"/>
+                    <TextBox Name="LoginBox" HorizontalAlignment="Left" Margin="372,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="289" Height="28" FontFamily="Arial" FontSize="16" IsEnabled="False" BorderBrush="Black"/>
+                    <TextBox Name="NewPassBox" HorizontalAlignment="Left" Margin="372,131,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="289" Height="28" FontFamily="Arial" FontSize="16" BorderBrush="Black"/>
+                    <Button Name="SavePassButton" Content="Сохранить" HorizontalAlignment="Left" Margin="676,132,0,0" VerticalAlignment="Top" Width="98" Height="26" FontFamily="Arial" FontSize="16" Click="SavePassButton_Click" Background="#FF4D4D4D" BorderBrush="Black" Foreground="White">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Background" Value="#FF4D4D4D"></Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="Black"></Setter>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
                     <Label Content="Ссылка для расписания:" HorizontalAlignment="Left" Margin="10,222,0,0" VerticalAlignment="Top" FontFamily="Arial Black" FontSize="16"/>
-                    <TextBox x:Name="UrlBox" HorizontalAlignment="Left" Margin="252,225,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="409" Height="43" FontFamily="Arial" FontSize="16"/>
-                    <Button x:Name="SaveUrlButton" Content="Сохранить" HorizontalAlignment="Left" Margin="676,226,0,0" VerticalAlignment="Top" Width="98" Height="26" FontFamily="Arial" FontSize="16" Click="SaveUrlButton_Click"/>
-                    <DataGrid Name="ResultGrid" AutoGenerateColumns="False" Margin="10,353,0,10">
+                    <TextBox x:Name="UrlBox" HorizontalAlignment="Left" Margin="252,225,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="409" Height="43" FontFamily="Arial" FontSize="16" BorderBrush="Black"/>
+                    <Button x:Name="SaveUrlButton" Content="Сохранить" HorizontalAlignment="Left" Margin="676,226,0,0" VerticalAlignment="Top" Width="98" Height="42" FontFamily="Arial" FontSize="16" Click="SaveUrlButton_Click" Background="#FF4D4D4D" BorderBrush="Black" Foreground="White">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Background" Value="#FF4D4D4D"></Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="Black"></Setter>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                    <DataGrid Name="ResultGrid" AutoGenerateColumns="False" Margin="10,353,10,10" BorderBrush="Black">
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding subjectName}" IsReadOnly="True" Header="Предмет"></DataGridTextColumn>
                             <DataGridTextColumn Binding="{Binding countHours}" Header="Общее количество часов"></DataGridTextColumn>

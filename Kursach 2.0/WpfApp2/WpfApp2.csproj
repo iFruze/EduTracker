@@ -95,16 +95,22 @@
     <Compile Include="AllHoursOfSubjects.xaml.cs">
       <DependentUpon>AllHoursOfSubjects.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AllSubjectHours.cs" />
+    <Compile Include="Classes\AllSubjectHours.cs" />
     <Compile Include="BaseWindow.xaml.cs">
       <DependentUpon>BaseWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Classes\HtmlParser.cs" />
+    <Compile Include="Classes\PasswordHasher.cs" />
+    <Compile Include="Classes\TeachAuth.cs" />
+    <Compile Include="Classes\TeachersRepository.cs" />
+    <Compile Include="Classes\TeachReg.cs" />
     <Compile Include="Dates.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Hours.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\ISaver.cs" />
     <Compile Include="Model.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -123,13 +129,14 @@
     <Compile Include="Subjects.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Classes\SubjectsRepository.cs" />
     <Compile Include="sysdiagrams.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Teachers.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="WeekSubjects.cs" />
+    <Compile Include="Classes\WeekSubjects.cs" />
     <Page Include="AddHourWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -61,8 +61,8 @@ namespace WpfApp2
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            //try
-            //{
+            try
+            {
                 List<string> errors = new List<string>();
                 if (!Regex.IsMatch(GroupBox.Text, @"[А-Я]{1}-[0-9]{3}"))
                 {
@@ -114,12 +114,12 @@ namespace WpfApp2
                     this.DialogResult = true;
                     this.Close();
                 }
-            //}
-            //catch(Exception ex)
-            //{
-            //    MessageBox.Show(ex.Message, "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
-            //}
-        }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+}
 
         
         private void Date_Click(object sender, MouseButtonEventArgs e)

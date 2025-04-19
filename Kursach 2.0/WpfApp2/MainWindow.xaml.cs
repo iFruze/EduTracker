@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfApp2.Classes;
 
 namespace WpfApp2
 {
@@ -27,39 +29,33 @@ namespace WpfApp2
         }
         private void RegButton_Click(object sender, RoutedEventArgs e)
         {
-            string log = this.RegLogText_Box.Text;
-            string password1 = this.FirstRegPasText_Box.Password;
-            string password2 = this.SecondRegPasText_Box.Password;
-            if(password1.CompareTo(password2) == 0)
+            TeachReg validator = new TeachReg(this.RegLogText_Box.Text, this.FirstRegPasText_Box.Password, this.SecondRegPasText_Box.Password);
+            if (validator.ValidatePasswords())
             {
-                if (password2.Length <= 5)
+                if(validator.ValidatePasswordLength())
                 {
-                    MessageBox.Show("Длина пароля должна составлять минимум 6 символов.");
-                }
-                else
-                {
-                    var hash = HashFunc(password2, 11, 9);
-                    var teachers = TeachHoursEntities2.GetContext().Teachers.ToDictionary(teach => teach.login, teach => teach.password);
-                    if (teachers.Keys.Contains(log))
+                    var teachers = TeachersRepository.GetTeachersDictionary();
+                    if (validator.ValidateLogin(teachers))
                     {
-                        MessageBox.Show("Данный логин уже занят.", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Information);
+                        var login = this.RegLogText_Box.Text;
+                        var hashPas = PasswordHasher.HashFunc(this.FirstRegPasText_Box.Password);
+                        if(TeachersRepository.Save(login, hashPas.ToString()))
+                        {
+                            MessageBox.Show("Вы зарегистрированы!", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Во время регитсрации произршла непредвиденная ошибка. Повторите попытку.", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
                     }
                     else
                     {
-                        Teachers teach = new Teachers();
-                        teach.login = log;
-                        teach.password = hash.ToString();
-                        TeachHoursEntities2.GetContext().Teachers.Add(teach);
-                        try
-                        {
-                            TeachHoursEntities2.GetContext().SaveChanges();
-                            MessageBox.Show("Вы зарегистрированы!");
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show(ex.Message);
-                        }
+                        MessageBox.Show("Данный логин уже занят.", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
+                }
+                else
+                {
+                    MessageBox.Show("Длина пароля должна составлять минимум 6 символов.", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             else
@@ -67,94 +63,52 @@ namespace WpfApp2
                 MessageBox.Show("Пароли не совпадают.", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-        public ulong HashFunc(string str, int key, int count)
-        {
-            ulong size = (ulong)Math.Pow(10, count);
-            ulong hash_code, t_hash = 0;
-            for(int i = 0; i < str.Length; i++)
-            {
-                t_hash += (ulong)Math.Pow(key, i) * (ulong)str[i];
-                t_hash %= size;
-            }
-            hash_code = t_hash % size;
-            return hash_code;
-        }
-        
         private void AuthButton_Click(object sender, RoutedEventArgs e)
         {
-            try
+            var hashPas = PasswordHasher.HashFunc(this.AuthPasText_Box.Password);
+            TeachAuth validator = new TeachAuth(this.AuthLogText_Box.Text, hashPas.ToString());
+            var teachersDict = TeachersRepository.GetTeachersDictionary();
+            var teachersList = TeachersRepository.GetTeachersList();
+            if (validator.ValidateLogin(teachersDict))
             {
-                string login = this.AuthLogText_Box.Text;
-                string password = this.AuthPasText_Box.Password;
-                var hash = HashFunc(password, 11, 9);
-                var teachers = TeachHoursEntities2.GetContext().Teachers.ToDictionary(teach => teach.login, teach => teach.password);
-                if (teachers.Keys.Contains(login))
+                int teachId = validator.ValidatePassword(teachersList);
+                if (teachId > 0)
                 {
-                    if (teachers.TryGetValue(login, out string pass))
-                    {
-                        if (pass.CompareTo(hash.ToString()) == 0)
-                        {
-                            var teach = TeachHoursEntities2.GetContext().Teachers.SingleOrDefault(t => t.login.CompareTo(login) == 0);
-                            if (teach != null)
-                            {
-                                int id = teach.id;
-                                BaseWindow page = new BaseWindow(id);
-                                page.Show();
-                                this.Close();
-                            }
-                            else
-                            {
-                                MessageBox.Show("При регистрации возникла непредвиденая ошибка.\nПовторите попытку.");
-                            }
-                        }
-                        else
-                        {
-                            MessageBox.Show("Неверный пароль.");
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show("Произошла непредвиденная ошибка.");
-                    }
+                    BaseWindow page = new BaseWindow(teachId);
+                    page.Show();
+                    this.Close();
                 }
                 else
                 {
-                    MessageBox.Show("Неверный логин.");
+                    MessageBox.Show("Неверный пароль.", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-                
             }
-            catch(Exception ex)
+            else
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("Неверный логин.", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
         private void AuthPasTextBox_Click(object sender, MouseButtonEventArgs e)
         {
             this.AuthPasText_Box.Password = "";
         }
-
         private void AuthLogTextBox_Click(object sender, MouseButtonEventArgs e)
         {
             this.AuthLogText_Box.Text = "";
         }
-
         private void RegLog_Click(object sender, MouseButtonEventArgs e)
         {
             this.RegLogText_Box.Text = "";
         }
-
         private void RegPas1_Click(object sender, MouseButtonEventArgs e)
         {
             this.FirstRegPasText_Box.Password = "";
         }
-
         private void RegPas2_Click(object sender, MouseButtonEventArgs e)
         {
             this.SecondRegPasText_Box.Password = "";
         }
     }
-    
 }
 
 /*
