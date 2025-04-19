@@ -393,6 +393,7 @@ namespace WpfApp2
                     SourceGrid.ItemsSource = null;
                     SourceGrid.Items.Clear();
                     week = DateTime.Now;
+                    CreateWeekGrid(week);
                     while (week.DayOfWeek != DayOfWeek.Monday)
                     {
                         week = week.AddDays(-1);
@@ -476,7 +477,79 @@ namespace WpfApp2
             }
             
         }
-
+        public void CreateWeekGrid(DateTime curWeek)
+        {
+            while (curWeek.DayOfWeek != DayOfWeek.Monday)
+            {
+                curWeek = week.AddDays(-1);
+            }
+            DateTime week1 = week;
+            DateTime date1 = DateTime.Now;
+            DateTime date2 = DateTime.Now;
+            SourceGrid.Columns.Clear();
+            SourceGrid.ItemsSource = null;
+            SourceGrid.Items.Clear();
+            for (int i = 1; i < 7; i++, week1 = week1.AddDays(1))
+            {
+                if (i == 1)
+                {
+                    var column = new DataGridTextColumn
+                    {
+                        Header = $"Понедельник\n{week1.ToShortDateString()}",
+                        Binding = new Binding("Monday")
+                    };
+                    this.SourceGrid.Columns.Add(column);
+                    date1 = week1;
+                }
+                if (i == 2)
+                {
+                    var column = new DataGridTextColumn
+                    {
+                        Header = $"Вторник\n{week1.ToShortDateString()}",
+                        Binding = new Binding("Tuesday")
+                    };
+                    this.SourceGrid.Columns.Add(column);
+                }
+                if (i == 3)
+                {
+                    var column = new DataGridTextColumn
+                    {
+                        Header = $"Среда\n{week1.ToShortDateString()}",
+                        Binding = new Binding("Wednesday")
+                    };
+                    this.SourceGrid.Columns.Add(column);
+                }
+                if (i == 4)
+                {
+                    var column = new DataGridTextColumn
+                    {
+                        Header = $"Четверг\n{week1.ToShortDateString()}",
+                        Binding = new Binding("Thursday")
+                    };
+                    this.SourceGrid.Columns.Add(column);
+                }
+                if (i == 5)
+                {
+                    var column = new DataGridTextColumn
+                    {
+                        Header = $"Пятница\n{week1.ToShortDateString()}",
+                        Binding = new Binding("Friday")
+                    };
+                    this.SourceGrid.Columns.Add(column);
+                }
+                if (i == 6)
+                {
+                    var column = new DataGridTextColumn
+                    {
+                        Header = $"Суббота\n{week1.ToShortDateString()}",
+                        Binding = new Binding("Saturday")
+                    };
+                    this.SourceGrid.Columns.Add(column);
+                    date2 = week1;
+                }
+            }
+            this.WeekName.Content = $"Неделя с {date1.ToShortDateString()} - {date2.ToShortDateString()}";
+        }
         
 
         private void SaveFile_Click(object sender, RoutedEventArgs e)
@@ -496,77 +569,14 @@ namespace WpfApp2
                 indexOfFile = filesInDirectory.Count - 1;
                 string json1 = File.ReadAllText(filesInDirectory[indexOfFile]);
                 weekSubjects = JsonConvert.DeserializeObject<BindingList<WeekSubjects>>(json1);
-                SourceGrid.Columns.Clear();
-                SourceGrid.ItemsSource = null;
-                SourceGrid.Items.Clear(); week = DateTime.Now;
-                while(week.DayOfWeek != DayOfWeek.Monday)
-                {
-                    week = week.AddDays(-1);
-                }
-                DateTime week1 = week;
-                for (int i = 1; i < 7; i++, week1 = week1.AddDays(1))
-                {
-                    if (i == 1)
-                    {
-                        var column = new DataGridTextColumn
-                        {
-                            Header = $"Понедельник\n{week1.ToShortDateString()}",
-                            Binding = new Binding("Monday")
-                        };
-                        this.SourceGrid.Columns.Add(column);
-                    }
-                    if (i == 2)
-                    {
-                        var column = new DataGridTextColumn
-                        {
-                            Header = $"Вторник\n{week1.ToShortDateString()}",
-                            Binding = new Binding("Tuesday")
-                        };
-                        this.SourceGrid.Columns.Add(column);
-                    }
-                    if (i == 3)
-                    {
-                        var column = new DataGridTextColumn
-                        {
-                            Header = $"Среда\n{week1.ToShortDateString()}",
-                            Binding = new Binding("Wednesday")
-                        };
-                        this.SourceGrid.Columns.Add(column);
-                    }
-                    if (i == 4)
-                    {
-                        var column = new DataGridTextColumn
-                        {
-                            Header = $"Четверг\n{week.ToShortDateString()}",
-                            Binding = new Binding("Thursday")
-                        };
-                        this.SourceGrid.Columns.Add(column);
-                    }
-                    if (i == 5)
-                    {
-                        var column = new DataGridTextColumn
-                        {
-                            Header = $"Пятница\n{week1.ToShortDateString()}",
-                            Binding = new Binding("Friday")
-                        };
-                        this.SourceGrid.Columns.Add(column);
-                    }
-                    if (i == 6)
-                    {
-                        var column = new DataGridTextColumn
-                        {
-                            Header = $"Суббота\n{week1.ToShortDateString()}",
-                            Binding = new Binding("Saturday")
-                        };
-                        this.SourceGrid.Columns.Add(column);
-                    }
-                }
+                week = DateTime.Now;
+                CreateWeekGrid(week);
                 SourceGrid.ItemsSource = weekSubjects;
                 sourceSave = true;
             }
             else
             {
-                MessageBox.Show("Сначала загрузите расписание с сайта колледжа.");
+                MessageBox.Show("Сначала загрузите расписание с сайта колледжа.", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

@@ -3,19 +3,27 @@
   "WorkspaceRootPath": "C:\\Users\\iFruze\\Desktop\\GITKursach\\Kursach 2.0\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{1F0F0F50-B181-4467-A2A1-477E49143072}|WpfApp2\\WpfApp2.csproj|c:\\users\\ifruze\\desktop\\gitkursach\\kursach 2.0\\wpfapp2\\classes\\allhoursrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1F0F0F50-B181-4467-A2A1-477E49143072}|WpfApp2\\WpfApp2.csproj|solutionrelative:wpfapp2\\classes\\allhoursrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{1F0F0F50-B181-4467-A2A1-477E49143072}|WpfApp2\\WpfApp2.csproj|c:\\users\\ifruze\\desktop\\gitkursach\\kursach 2.0\\wpfapp2\\basewindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1F0F0F50-B181-4467-A2A1-477E49143072}|WpfApp2\\WpfApp2.csproj|solutionrelative:wpfapp2\\basewindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1F0F0F50-B181-4467-A2A1-477E49143072}|WpfApp2\\WpfApp2.csproj|c:\\users\\ifruze\\desktop\\gitkursach\\kursach 2.0\\wpfapp2\\classes\\teachersrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{1F0F0F50-B181-4467-A2A1-477E49143072}|WpfApp2\\WpfApp2.csproj|C:\\Users\\iFruze\\Desktop\\GITKursach\\Kursach 2.0\\wpfapp2\\classes\\teachersrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1F0F0F50-B181-4467-A2A1-477E49143072}|WpfApp2\\WpfApp2.csproj|solutionrelative:wpfapp2\\classes\\teachersrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1F0F0F50-B181-4467-A2A1-477E49143072}|WpfApp2\\WpfApp2.csproj|c:\\users\\ifruze\\desktop\\gitkursach\\kursach 2.0\\wpfapp2\\classes\\subjectsrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{1F0F0F50-B181-4467-A2A1-477E49143072}|WpfApp2\\WpfApp2.csproj|c:\\users\\ifruze\\desktop\\gitkursach\\kursach 2.0\\wpfapp2\\classes\\datesrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1F0F0F50-B181-4467-A2A1-477E49143072}|WpfApp2\\WpfApp2.csproj|solutionrelative:wpfapp2\\classes\\datesrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1F0F0F50-B181-4467-A2A1-477E49143072}|WpfApp2\\WpfApp2.csproj|C:\\Users\\iFruze\\Desktop\\GITKursach\\Kursach 2.0\\wpfapp2\\classes\\subjectsrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1F0F0F50-B181-4467-A2A1-477E49143072}|WpfApp2\\WpfApp2.csproj|solutionrelative:wpfapp2\\classes\\subjectsrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1F0F0F50-B181-4467-A2A1-477E49143072}|WpfApp2\\WpfApp2.csproj|c:\\users\\ifruze\\desktop\\gitkursach\\kursach 2.0\\wpfapp2\\classes\\htmlparser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{1F0F0F50-B181-4467-A2A1-477E49143072}|WpfApp2\\WpfApp2.csproj|C:\\Users\\iFruze\\Desktop\\GITKursach\\Kursach 2.0\\wpfapp2\\classes\\htmlparser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1F0F0F50-B181-4467-A2A1-477E49143072}|WpfApp2\\WpfApp2.csproj|solutionrelative:wpfapp2\\classes\\htmlparser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -26,7 +34,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Bookmark",
@@ -34,33 +42,59 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
+              "Title": "AllHoursRepository.cs",
+              "DocumentMoniker": "C:\\Users\\iFruze\\Desktop\\GITKursach\\Kursach 2.0\\WpfApp2\\Classes\\AllHoursRepository.cs",
+              "RelativeDocumentMoniker": "WpfApp2\\Classes\\AllHoursRepository.cs",
+              "ToolTip": "C:\\Users\\iFruze\\Desktop\\GITKursach\\Kursach 2.0\\WpfApp2\\Classes\\AllHoursRepository.cs",
+              "RelativeToolTip": "WpfApp2\\Classes\\AllHoursRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-19T06:36:42.09Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "DatesRepository.cs",
+              "DocumentMoniker": "C:\\Users\\iFruze\\Desktop\\GITKursach\\Kursach 2.0\\WpfApp2\\Classes\\DatesRepository.cs",
+              "RelativeDocumentMoniker": "WpfApp2\\Classes\\DatesRepository.cs",
+              "ToolTip": "C:\\Users\\iFruze\\Desktop\\GITKursach\\Kursach 2.0\\WpfApp2\\Classes\\DatesRepository.cs",
+              "RelativeToolTip": "WpfApp2\\Classes\\DatesRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-19T06:30:11.407Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "TeachersRepository.cs",
               "DocumentMoniker": "C:\\Users\\iFruze\\Desktop\\GITKursach\\Kursach 2.0\\WpfApp2\\Classes\\TeachersRepository.cs",
               "RelativeDocumentMoniker": "WpfApp2\\Classes\\TeachersRepository.cs",
               "ToolTip": "C:\\Users\\iFruze\\Desktop\\GITKursach\\Kursach 2.0\\WpfApp2\\Classes\\TeachersRepository.cs",
               "RelativeToolTip": "WpfApp2\\Classes\\TeachersRepository.cs",
-              "ViewState": "AgIAAAsAAAAAAAAAAAAAwBwAAAAeAAAAAAAAAA==",
+              "ViewState": "AgIAABYAAAAAAAAAAAAlwCQAAAA/AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-19T06:02:57.864Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "BaseWindow.xaml.cs",
               "DocumentMoniker": "C:\\Users\\iFruze\\Desktop\\GITKursach\\Kursach 2.0\\WpfApp2\\BaseWindow.xaml.cs",
               "RelativeDocumentMoniker": "WpfApp2\\BaseWindow.xaml.cs",
               "ToolTip": "C:\\Users\\iFruze\\Desktop\\GITKursach\\Kursach 2.0\\WpfApp2\\BaseWindow.xaml.cs",
               "RelativeToolTip": "WpfApp2\\BaseWindow.xaml.cs",
-              "ViewState": "AgIAAKEBAAAAAAAAAAAIwKcBAAAjAAAAAAAAAA==",
+              "ViewState": "AgIAALoDAAAAAAAAAAAAAMYDAAAuAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-19T06:00:04.492Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "HtmlParser.cs",
               "DocumentMoniker": "C:\\Users\\iFruze\\Desktop\\GITKursach\\Kursach 2.0\\WpfApp2\\Classes\\HtmlParser.cs",
               "RelativeDocumentMoniker": "WpfApp2\\Classes\\HtmlParser.cs",
@@ -68,12 +102,11 @@
               "RelativeToolTip": "WpfApp2\\Classes\\HtmlParser.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-19T05:58:54.92Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-19T05:58:54.92Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "SubjectsRepository.cs",
               "DocumentMoniker": "C:\\Users\\iFruze\\Desktop\\GITKursach\\Kursach 2.0\\WpfApp2\\Classes\\SubjectsRepository.cs",
               "RelativeDocumentMoniker": "WpfApp2\\Classes\\SubjectsRepository.cs",
@@ -81,8 +114,7 @@
               "RelativeToolTip": "WpfApp2\\Classes\\SubjectsRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-19T05:57:54.556Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-19T05:57:54.556Z"
             }
           ]
         }

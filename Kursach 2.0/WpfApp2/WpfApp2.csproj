@@ -95,10 +95,12 @@
     <Compile Include="AllHoursOfSubjects.xaml.cs">
       <DependentUpon>AllHoursOfSubjects.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Classes\AllHoursRepository.cs" />
     <Compile Include="Classes\AllSubjectHours.cs" />
     <Compile Include="BaseWindow.xaml.cs">
       <DependentUpon>BaseWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Classes\DatesRepository.cs" />
     <Compile Include="Classes\HtmlParser.cs" />
     <Compile Include="Classes\PasswordHasher.cs" />
     <Compile Include="Classes\TeachAuth.cs" />
