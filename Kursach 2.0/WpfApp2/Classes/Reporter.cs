@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WpfApp2
+namespace WpfApp2.Classes
 {
-    internal static class SubjectsRepository
+    internal class Reporter
     {
-        
+
     }
 }

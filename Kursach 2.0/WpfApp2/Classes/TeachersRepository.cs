@@ -28,12 +28,24 @@ namespace WpfApp2.Classes
         }
         public static Teachers GetTeacherById(int id) => TeachHoursEntities2.GetContext().Teachers.FirstOrDefault(t => t.id == id);
         public static List<Teachers> GetTeachersList() => TeachHoursEntities2.GetContext().Teachers.ToList();
-        public static bool ChangePassword(int id, string password)
+        public static bool ChangePassword(Teachers teacher, string password)
         {
             try
             {
-                Teachers teacher = GetTeacherById(id);
                 teacher.password = password;
+                TeachHoursEntities2.GetContext().SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        public static bool ChangeUrl(Teachers teacher, string url)
+        {
+            try
+            {
+                teacher.url = url;
                 TeachHoursEntities2.GetContext().SaveChanges();
                 return true;
             }

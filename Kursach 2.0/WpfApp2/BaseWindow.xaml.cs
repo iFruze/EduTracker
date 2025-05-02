@@ -21,6 +21,7 @@ using Microsoft.Office.Interop.Word;
 using System.Net.NetworkInformation;
 using System.Diagnostics;
 using WpfApp2.Classes;
+using System.Reflection;
 
 namespace WpfApp2
 {
@@ -43,18 +44,18 @@ namespace WpfApp2
         bool sourceSave = true;
         int indexOfFile = -1;
         DateTime week = DateTime.Now;
-        public ulong HashFunc(string str, int key, int count)
-        {
-            ulong size = (ulong)Math.Pow(10, count);
-            ulong hash_code, t_hash = 0;
-            for (int i = 0; i < str.Length; i++)
-            {
-                t_hash += (ulong)Math.Pow(key, i) * (ulong)str[i];
-                t_hash %= size;
-            }
-            hash_code = t_hash % size;
-            return hash_code;
-        }
+        //public ulong HashFunc(string str, int key, int count)
+        //{
+        //    ulong size = (ulong)Math.Pow(10, count);
+        //    ulong hash_code, t_hash = 0;
+        //    for (int i = 0; i < str.Length; i++)
+        //    {
+        //        t_hash += (ulong)Math.Pow(key, i) * (ulong)str[i];
+        //        t_hash %= size;
+        //    }
+        //    hash_code = t_hash % size;
+        //    return hash_code;
+        //}
         public BaseWindow()
         {
             InitializeComponent();
@@ -63,36 +64,36 @@ namespace WpfApp2
         {
             InitializeComponent();
             id = teacherId;
+            teacher = TeachersRepository.GetTeacherById(id);
             CreateTeachFolder(id);
         }
 
         private void SavePassButton_Click(object sender, RoutedEventArgs e)
         {
-            if(MessageBox.Show("Вы точно хотите изменить свой пароль?", "Внимание", MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.Yes)
+            if(MessageBox.Show("Вы точно хотите изменить свой пароль?", "Внимание", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
             {
-                if (this.NewPassBox.Text.Length <= 5)
+                TeachReg validator = new TeachReg(teacher.login, this.NewPassBox.Text, this.NewPassBox.Text);
+                if (validator.ValidatePasswordLength())
                 {
-                    MessageBox.Show("Длина пароля должна составлять минимум 6 символов.");
+                    string newPass = PasswordHasher.HashFunc(this.NewPassBox.Text).ToString();
+                    if (TeachersRepository.ChangePassword(teacher, newPass))
+                    {
+                        MessageBox.Show("Новый пароль сохранён.", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Во время сохранения пароля возникла ошибка. Повторите попытку.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                 }
                 else
                 {
-                    string newPass = HashFunc(this.NewPassBox.Text, 11, 9).ToString();
-                    teacher.password = newPass;
-                    try
-                    {
-                        TeachHoursEntities2.GetContext().SaveChanges();
-                        MessageBox.Show("Новый пароль сохранён.", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message);
-                    }
+                    MessageBox.Show("Длина пароля должна составлять минимум 6 символов.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            if(MessageBox.Show("Вы действительно хотите сохранить иземенения?", "Внимание", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            if(MessageBox.Show("Вы действительно хотите сохранить иземенения?", "Внимание", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
             {
                 var button = sender as Button;
                 var hour = button?.DataContext as AllSubjectHours;
@@ -122,7 +123,6 @@ namespace WpfApp2
         }
         private void Base_Load(object sender, RoutedEventArgs e)
         {
-            teacher = TeachHoursEntities2.GetContext().Teachers.FirstOrDefault(t => t.id == this.id);
             this.LoginBox.Text = teacher.login;
             this.UrlBox.Text = teacher.url;
             List<string> years = new List<string>();
@@ -224,7 +224,7 @@ namespace WpfApp2
                     string json = File.ReadAllText(filesInDirectory[indexOfFile]);
                     weekSubjects = JsonConvert.DeserializeObject<BindingList<WeekSubjects>>(json);
                     FileInfo fileInfo = new FileInfo(filesInDirectory[indexOfFile]);
-                    this.FileName.Content = $"Файл от {fileInfo.CreationTime.ToShortDateString()}";
+                    this.FileName.Content = $"Файл от {File.GetLastWriteTime(fileInfo.FullName).ToShortDateString()}";
                     SourceGrid.ItemsSource = weekSubjects;
                 }
                 catch (Exception ex)
@@ -240,7 +240,7 @@ namespace WpfApp2
         private void SaveUrlButton_Click(object sender, RoutedEventArgs e)
         {
 
-            if (MessageBox.Show("Вы точно хотите изменить ссылку для расписания?", "Внимание", MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.Yes)
+            if (MessageBox.Show("Вы точно хотите изменить ссылку для расписания?", "Внимание", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
             {
                 if (this.UrlBox.Text.Length == 0)
                 {
@@ -248,15 +248,13 @@ namespace WpfApp2
                 }
                 else
                 {
-                    teacher.url = this.UrlBox.Text;
-                    try
+                    if(TeachersRepository.ChangeUrl(teacher, this.UrlBox.Text))
                     {
-                        TeachHoursEntities2.GetContext().SaveChanges();
                         MessageBox.Show("Новая ссылка сохранена.", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
                     }
-                    catch (Exception ex)
+                    else
                     {
-                        MessageBox.Show(ex.Message);
+
                     }
                 }
             }
@@ -393,7 +391,7 @@ namespace WpfApp2
                     SourceGrid.ItemsSource = null;
                     SourceGrid.Items.Clear();
                     week = DateTime.Now;
-                    CreateWeekGrid(week);
+                    //CreateWeekGrid(week);
                     while (week.DayOfWeek != DayOfWeek.Monday)
                     {
                         week = week.AddDays(-1);
@@ -461,8 +459,17 @@ namespace WpfApp2
 
                         }
                     }
-                    indexOfFile = filesInDirectory.Count-1;
-                    this.WeekName.Content = $"Неделя с {date1.ToShortDateString()} - {date2.ToShortDateString()}";
+                    //var teachLogin = teacher.login;
+                    //string projectDir1 = AppDomain.CurrentDomain.BaseDirectory;
+                    //string dir1 = System.IO.Path.Combine(projectDir1, $"Расписание\\{teachLogin}");
+                    //filesInDirectory = Directory.GetFiles(dir1).OrderBy(file1 => File.GetCreationTime(file1)).ToList();
+                    //string json1 = File.ReadAllText(filesInDirectory[indexOfFile]);
+                    //indexOfFile = filesInDirectory.Count - 1;
+                    //weekSubjects = JsonConvert.DeserializeObject<BindingList<WeekSubjects>>(json1);
+                    //FileInfo fileinfo = new FileInfo(filesInDirectory[indexOfFile]);
+                    //this.FileName.Content = $"Файл от {File.GetLastWriteTime(fileinfo.FullName).ToShortDateString()}";
+                    //this.WeekName.Content = $"Неделя с {date1.ToShortDateString()} - {date2.ToShortDateString()}";
+                    indexOfFile = filesInDirectory.Count - 1;
                     SourceGrid.ItemsSource = weekSubjects;
                     sourceSave = false;
                 }
@@ -477,79 +484,7 @@ namespace WpfApp2
             }
             
         }
-        public void CreateWeekGrid(DateTime curWeek)
-        {
-            while (curWeek.DayOfWeek != DayOfWeek.Monday)
-            {
-                curWeek = week.AddDays(-1);
-            }
-            DateTime week1 = week;
-            DateTime date1 = DateTime.Now;
-            DateTime date2 = DateTime.Now;
-            SourceGrid.Columns.Clear();
-            SourceGrid.ItemsSource = null;
-            SourceGrid.Items.Clear();
-            for (int i = 1; i < 7; i++, week1 = week1.AddDays(1))
-            {
-                if (i == 1)
-                {
-                    var column = new DataGridTextColumn
-                    {
-                        Header = $"Понедельник\n{week1.ToShortDateString()}",
-                        Binding = new Binding("Monday")
-                    };
-                    this.SourceGrid.Columns.Add(column);
-                    date1 = week1;
-                }
-                if (i == 2)
-                {
-                    var column = new DataGridTextColumn
-                    {
-                        Header = $"Вторник\n{week1.ToShortDateString()}",
-                        Binding = new Binding("Tuesday")
-                    };
-                    this.SourceGrid.Columns.Add(column);
-                }
-                if (i == 3)
-                {
-                    var column = new DataGridTextColumn
-                    {
-                        Header = $"Среда\n{week1.ToShortDateString()}",
-                        Binding = new Binding("Wednesday")
-                    };
-                    this.SourceGrid.Columns.Add(column);
-                }
-                if (i == 4)
-                {
-                    var column = new DataGridTextColumn
-                    {
-                        Header = $"Четверг\n{week1.ToShortDateString()}",
-                        Binding = new Binding("Thursday")
-                    };
-                    this.SourceGrid.Columns.Add(column);
-                }
-                if (i == 5)
-                {
-                    var column = new DataGridTextColumn
-                    {
-                        Header = $"Пятница\n{week1.ToShortDateString()}",
-                        Binding = new Binding("Friday")
-                    };
-                    this.SourceGrid.Columns.Add(column);
-                }
-                if (i == 6)
-                {
-                    var column = new DataGridTextColumn
-                    {
-                        Header = $"Суббота\n{week1.ToShortDateString()}",
-                        Binding = new Binding("Saturday")
-                    };
-                    this.SourceGrid.Columns.Add(column);
-                    date2 = week1;
-                }
-            }
-            this.WeekName.Content = $"Неделя с {date1.ToShortDateString()} - {date2.ToShortDateString()}";
-        }
+        
         
 
         private void SaveFile_Click(object sender, RoutedEventArgs e)
@@ -569,8 +504,81 @@ namespace WpfApp2
                 indexOfFile = filesInDirectory.Count - 1;
                 string json1 = File.ReadAllText(filesInDirectory[indexOfFile]);
                 weekSubjects = JsonConvert.DeserializeObject<BindingList<WeekSubjects>>(json1);
+                FileInfo fileinfo = new FileInfo(filesInDirectory[indexOfFile]);
+                this.FileName.Content = $"Файл от {File.GetLastWriteTime(fileinfo.FullName).ToShortDateString()}";
                 week = DateTime.Now;
-                CreateWeekGrid(week);
+                SourceGrid.Columns.Clear();
+                SourceGrid.ItemsSource = null;
+                SourceGrid.Items.Clear();
+                week = DateTime.Now;
+                while (week.DayOfWeek != DayOfWeek.Monday)
+                {
+                    week = week.AddDays(-1);
+                }
+                DateTime week1 = week;
+                DateTime date1 = DateTime.Now;
+                DateTime date2 = DateTime.Now;
+                for (int i = 1; i < 7; i++, week1 = week1.AddDays(1))
+                {
+                    if (i == 1)
+                    {
+                        var column = new DataGridTextColumn
+                        {
+                            Header = $"Понедельник\n{week1.ToShortDateString()}",
+                            Binding = new Binding("Monday")
+                        };
+                        this.SourceGrid.Columns.Add(column);
+                        date1 = week1;
+                    }
+                    if (i == 2)
+                    {
+                        var column = new DataGridTextColumn
+                        {
+                            Header = $"Вторник\n{week1.ToShortDateString()}",
+                            Binding = new Binding("Tuesday")
+                        };
+                        this.SourceGrid.Columns.Add(column);
+                    }
+                    if (i == 3)
+                    {
+                        var column = new DataGridTextColumn
+                        {
+                            Header = $"Среда\n{week1.ToShortDateString()}",
+                            Binding = new Binding("Wednesday")
+                        };
+                        this.SourceGrid.Columns.Add(column);
+                    }
+                    if (i == 4)
+                    {
+                        var column = new DataGridTextColumn
+                        {
+                            Header = $"Четверг\n{week1.ToShortDateString()}",
+                            Binding = new Binding("Thursday")
+                        };
+                        this.SourceGrid.Columns.Add(column);
+                    }
+                    if (i == 5)
+                    {
+                        var column = new DataGridTextColumn
+                        {
+                            Header = $"Пятница\n{week1.ToShortDateString()}",
+                            Binding = new Binding("Friday")
+                        };
+                        this.SourceGrid.Columns.Add(column);
+                    }
+                    if (i == 6)
+                    {
+                        var column = new DataGridTextColumn
+                        {
+                            Header = $"Суббота\n{week1.ToShortDateString()}",
+                            Binding = new Binding("Saturday")
+                        };
+                        this.SourceGrid.Columns.Add(column);
+                        date2 = week1;
+
+                    }
+                }
+                this.WeekName.Content = $"Неделя с {date1.ToShortDateString()} - {date2.ToShortDateString()}";
                 SourceGrid.ItemsSource = weekSubjects;
                 sourceSave = true;
             }
@@ -1090,7 +1098,8 @@ namespace WpfApp2
                             string json1 = File.ReadAllText(filesInDirectory[indexOfFile]);
                             weekSubjects = JsonConvert.DeserializeObject<BindingList<WeekSubjects>>(json1);
                             FileInfo fileinfo = new FileInfo(filesInDirectory[indexOfFile]);
-                            this.FileName.Content = $"Файл от {fileinfo.CreationTime.ToShortDateString()}";
+                            //this.FileName.Content = $"Файл от {fileinfo.CreationTime.ToShortDateString()}";
+                            this.FileName.Content = $"Файл от {File.GetLastWriteTime(fileinfo.FullName).ToShortDateString()}";
                             SourceGrid.Columns.Clear();
                             SourceGrid.ItemsSource = null;
                             SourceGrid.Items.Clear();
@@ -1185,7 +1194,7 @@ namespace WpfApp2
                         string json = File.ReadAllText(filesInDirectory[indexOfFile]);
                         weekSubjects = JsonConvert.DeserializeObject<BindingList<WeekSubjects>>(json);
                         FileInfo fileinfo = new FileInfo(filesInDirectory[indexOfFile]);
-                        this.FileName.Content = $"Файл от {fileinfo.CreationTime.ToShortDateString()}";
+                        this.FileName.Content = $"Файл от {File.GetLastWriteTime(fileinfo.FullName).ToShortDateString()}";
                         SourceGrid.Columns.Clear();
                         SourceGrid.ItemsSource = null;
                         SourceGrid.Items.Clear(); week = week.AddDays(-7);
@@ -1253,7 +1262,6 @@ namespace WpfApp2
                             }
                         }
                         this.WeekName.Content = $"Неделя с {date1.ToShortDateString()} - {date2.ToShortDateString()}";
-
                         SourceGrid.ItemsSource = weekSubjects;
                     }
                     catch (Exception ex)
@@ -1292,7 +1300,7 @@ namespace WpfApp2
                             string json1 = File.ReadAllText(filesInDirectory[indexOfFile]);
                             weekSubjects = JsonConvert.DeserializeObject<BindingList<WeekSubjects>>(json1);
                             FileInfo fileinfo = new FileInfo(filesInDirectory[indexOfFile]);
-                            this.FileName.Content = $"Файл от {fileinfo.CreationTime.ToShortDateString()}";
+                            this.FileName.Content = $"Файл от {File.GetLastWriteTime(fileinfo.FullName).ToShortDateString()}";
                             SourceGrid.Columns.Clear();
                             SourceGrid.ItemsSource = null;
                             SourceGrid.Items.Clear(); week = DateTime.Now;
@@ -1387,7 +1395,7 @@ namespace WpfApp2
                         string json = File.ReadAllText(filesInDirectory[indexOfFile]);
                         weekSubjects = JsonConvert.DeserializeObject<BindingList<WeekSubjects>>(json);
                         FileInfo fileinfo = new FileInfo(filesInDirectory[indexOfFile]);
-                        this.FileName.Content = $"Файл от {fileinfo.CreationTime.ToShortDateString()}";
+                        this.FileName.Content = $"Файл от {File.GetLastWriteTime(fileinfo.FullName).ToShortDateString()}";
                         SourceGrid.Columns.Clear();
                         SourceGrid.ItemsSource = null;
                         SourceGrid.Items.Clear(); week = week.AddDays(7);
@@ -1475,7 +1483,7 @@ namespace WpfApp2
         }
         private void CreateAllHoursTable()
         {
-            var allHours = TeachHoursEntities2.GetContext().AllHours.Where(s=>s.teacherId == id).ToList();
+            var allHours = AllHoursRepository.GetAllHoursOfCurrentTeacher(teacher.id);
             List<string> subs = new List<string>();
             var currentSubs = allHours.Select(s => s.subjectName.ToString()).ToList();
             if(allSubjectHours.Count > 0)
@@ -1495,6 +1503,7 @@ namespace WpfApp2
                         AllHoursOfSubjects window = new AllHoursOfSubjects(sub);
                         window.temp = GetHour;
                         window.ShowDialog();
+
                         var h = new AllHours();
                         h.subjectName = sub;
                         h.countHours = allHoursOfSubject;
@@ -1503,7 +1512,7 @@ namespace WpfApp2
                         TeachHoursEntities2.GetContext().SaveChanges();
                     }
                 }
-                allHours = TeachHoursEntities2.GetContext().AllHours.ToList();
+                allHours = AllHoursRepository.GetAllHoursOfCurrentTeacher(teacher.id);
                 currentSubs = allHours.Select(s => s.subjectName.ToString()).ToList();
                 foreach (var sub in currentSubs)
                 {
@@ -1519,8 +1528,7 @@ namespace WpfApp2
         }
         public void CreateTeachFolder(int id)
         {
-            var teach = TeachersRepository.GetTeacherById(id);
-            var teachLogin = teach.login;
+            var teachLogin = teacher.login;
             string projectDir = AppDomain.CurrentDomain.BaseDirectory;
             string dir = System.IO.Path.Combine(projectDir, $"Расписание\\{teachLogin}");
             if (!Directory.Exists(dir))
