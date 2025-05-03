@@ -30,7 +30,6 @@ namespace WpfApp2
     /// </summary>
     public partial class BaseWindow : System.Windows.Window
     {
-        
         int id;
         DateTime reportDate = new DateTime(1920, 12, 31);
         string fileName = "";
@@ -44,18 +43,6 @@ namespace WpfApp2
         bool sourceSave = true;
         int indexOfFile = -1;
         DateTime week = DateTime.Now;
-        //public ulong HashFunc(string str, int key, int count)
-        //{
-        //    ulong size = (ulong)Math.Pow(10, count);
-        //    ulong hash_code, t_hash = 0;
-        //    for (int i = 0; i < str.Length; i++)
-        //    {
-        //        t_hash += (ulong)Math.Pow(key, i) * (ulong)str[i];
-        //        t_hash %= size;
-        //    }
-        //    hash_code = t_hash % size;
-        //    return hash_code;
-        //}
         public BaseWindow()
         {
             InitializeComponent();
@@ -100,8 +87,8 @@ namespace WpfApp2
                 var selectedHour = TeachHoursEntities2.GetContext().Hours.FirstOrDefault(h => h.id == hour.Id);
                 try
                 {
-                    Dates date = TeachHoursEntities2.GetContext().Dates.SingleOrDefault(d => d.id == selectedHour.dateId);
-                    Subjects subject = TeachHoursEntities2.GetContext().Subjects.SingleOrDefault(s => s.id == selectedHour.subjectId);
+                    Dates date = TeachHoursEntities2.GetContext().Dates.FirstOrDefault(d => d.id == selectedHour.dateId);
+                    Subjects subject = TeachHoursEntities2.GetContext().Subjects.FirstOrDefault(s => s.id == selectedHour.subjectId);
                     if (DateTime.TryParse(hour.Date, out DateTime dt) && hour.Subject.Length > 0)
                     {
                         date.date = dt;
