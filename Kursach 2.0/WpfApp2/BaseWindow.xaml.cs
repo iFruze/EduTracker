@@ -74,7 +74,7 @@ namespace WpfApp2
                 }
                 else
                 {
-                    MessageBox.Show("Длина пароля должна составлять минимум 6 символов.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Длина пароля должна составлять минимум 6 символов.", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }
@@ -84,27 +84,31 @@ namespace WpfApp2
             {
                 var button = sender as Button;
                 var hour = button?.DataContext as AllSubjectHours;
-                var selectedHour = TeachHoursEntities2.GetContext().Hours.FirstOrDefault(h => h.id == hour.Id);
+                var selectedHour = HoursRepository.GetHourById(hour.Id);
                 try
                 {
-                    Dates date = TeachHoursEntities2.GetContext().Dates.FirstOrDefault(d => d.id == selectedHour.dateId);
-                    Subjects subject = TeachHoursEntities2.GetContext().Subjects.FirstOrDefault(s => s.id == selectedHour.subjectId);
+                    Dates date = DatesRepository.GetDateById(selectedHour.dateId);
+                    Subjects subject = SubjectsRepository.GetSubjectById(selectedHour.subjectId);
                     if (DateTime.TryParse(hour.Date, out DateTime dt) && hour.Subject.Length > 0)
                     {
-                        date.date = dt;
-                        subject.name = hour.Subject;
-                        TeachHoursEntities2.GetContext().SaveChanges();
-                        MessageBox.Show("Данные успешно изменены.");
-                        CreateAllHoursTable();
+                        if(DatesRepository.ChangeDate(date.id, dt) && SubjectsRepository.ChangeNameSubject(subject.id, hour.Subject))
+                        {
+                            MessageBox.Show("Данные успешно изменены.", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
+                            CreateAllHoursTable();
+                        }
+                        else
+                        {
+                            MessageBox.Show("При сохранении изменений произошла ошибка.", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
                     }
                     else
                     {
-                        MessageBox.Show("Данные введены неверно.");
+                        MessageBox.Show("Данные введены неверно.", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show(ex.Message, "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }
@@ -120,13 +124,13 @@ namespace WpfApp2
             YearBox.ItemsSource = years;
             List<string>months = new List<string>(new string[] {"Январь", "Февраль" , "Март" , "Апрель" , "Май" , "Июнь", "Июль", "Август", "Сентябрь", "Ноябрь", "Декабрь" });
             MonthBox.ItemsSource = months;
-            List<Hours> hours = TeachHoursEntities2.GetContext().Hours.Where(h => h.teacherId == teacher.id).ToList();
+            List<Hours> hours = HoursRepository.GetTeacherHours(teacher.id);//TeachHoursEntities2.GetContext().Hours.Where(h => h.teacherId == teacher.id).ToList();
             allSubjectHours = new BindingList<AllSubjectHours>();
             foreach(var h in hours)
             {
                 int id = h.id;
-                string subject = TeachHoursEntities2.GetContext().Subjects.SingleOrDefault(s => s.id == h.subjectId).name;
-                DateTime date = TeachHoursEntities2.GetContext().Dates.SingleOrDefault(d=>d.id == h.dateId).date;
+                string subject = SubjectsRepository.GetSubjectById(h.subjectId).name;
+                DateTime date = DatesRepository.GetDateById(h.dateId).date;
                 allSubjectHours.Add(new AllSubjectHours(id, date, subject));
             }
             CreateAllHoursTable();
@@ -197,7 +201,7 @@ namespace WpfApp2
                     date2 = week1;
                 }
             }
-            var teachLogin = TeachHoursEntities2.GetContext().Teachers.FirstOrDefault(t => t.id == id).login;
+            var teachLogin = teacher.login;
             this.WeekName.Content = $"Неделя с {date1.ToShortDateString()} - {date2.ToShortDateString()}";
             fileName = $"Неделя с {date1.ToShortDateString()} - {date2.ToShortDateString()}.json";
             string projectDir1 = AppDomain.CurrentDomain.BaseDirectory;
@@ -241,7 +245,7 @@ namespace WpfApp2
                     }
                     else
                     {
-
+                        MessageBox.Show("При сохранении новой ссылки произошла ошибка.", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
             }
@@ -268,56 +272,13 @@ namespace WpfApp2
                 try
                 {
                     var url = this.teacher.url;
-                    var monday = new List<string>();
-                    var tuesday = new List<string>();
-                    var wednesday = new List<string>();
-                    var thursday = new List<string>();
-                    var friday = new List<string>();
-                    var satuday = new List<string>();
-                    var config = Configuration.Default.WithDefaultLoader();
-                    var context = BrowsingContext.New(config);
-                    var doc = await context.OpenAsync(url);
-                    var links1 = doc.QuerySelectorAll($"tbody tr div.pair.lw_1:not(.removed) div.subject");
-                    var links2 = doc.QuerySelectorAll($"tbody tr div.pair.lw_1:not(.removed) div.group span.group-span a");
-                    for (int j = 0; j < links1.Length; j++)
-                    {
-                        monday.Add($"{links2[j].TextContent} {links1[j].TextContent}");
-                    }
-
-                    links1 = doc.QuerySelectorAll($"tbody tr div.pair.lw_2:not(.removed) div.subject");
-                    links2 = doc.QuerySelectorAll($"tbody tr div.pair.lw_2:not(.removed) div.group span.group-span a");
-                    for (int j = 0; j < links1.Length; j++)
-                    {
-                        tuesday.Add($"{links2[j].TextContent} {links1[j].TextContent}");
-                    }
-
-                    links1 = doc.QuerySelectorAll($"tbody tr div.pair.lw_3:not(.removed) div.subject");
-                    links2 = doc.QuerySelectorAll($"tbody tr div.pair.lw_3:not(.removed) div.group span.group-span a");
-                    for (int j = 0; j < links1.Length; j++)
-                    {
-                        wednesday.Add($"{links2[j].TextContent} {links1[j].TextContent}");
-                    }
-
-                    links1 = doc.QuerySelectorAll($"tbody tr div.pair.lw_4:not(.removed) div.subject");
-                    links2 = doc.QuerySelectorAll($"tbody tr div.pair.lw_4:not(.removed) div.group span.group-span a");
-                    for (int j = 0; j < links1.Length; j++)
-                    {
-                        thursday.Add($"{links2[j].TextContent} {links1[j].TextContent}");
-                    }
-
-                    links1 = doc.QuerySelectorAll($"tbody tr div.pair.lw_5:not(.removed) div.subject");
-                    links2 = doc.QuerySelectorAll($"tbody tr div.pair.lw_5:not(.removed) div.group span.group-span a");
-                    for (int j = 0; j < links1.Length; j++)
-                    {
-                        friday.Add($"{links2[j].TextContent} {links1[j].TextContent}");
-                    }
-
-                    links1 = doc.QuerySelectorAll($"tbody tr div.pair.lw_6:not(.removed) div.subject");
-                    links2 = doc.QuerySelectorAll($"tbody tr div.pair.lw_6:not(.removed) div.group span.group-span a");
-                    for (int j = 0; j < links1.Length; j++)
-                    {
-                        satuday.Add($"{links2[j].TextContent} {links1[j].TextContent}");
-                    }
+                    var monday = await HtmlParser.GetDayOfWeek(url, $"tbody tr div.pair.lw_1:not(.removed) div.subject", $"tbody tr div.pair.lw_1:not(.removed) div.group span.group-span a");
+                    var tuesday =  await HtmlParser.GetDayOfWeek(url, $"tbody tr div.pair.lw_2:not(.removed) div.subject", $"tbody tr div.pair.lw_2:not(.removed) div.group span.group-span a");
+                    var wednesday = await HtmlParser.GetDayOfWeek(url, $"tbody tr div.pair.lw_3:not(.removed) div.subject", $"tbody tr div.pair.lw_3:not(.removed) div.group span.group-span a");
+                    var thursday = await HtmlParser.GetDayOfWeek(url, $"tbody tr div.pair.lw_4:not(.removed) div.subject", $"tbody tr div.pair.lw_4:not(.removed) div.group span.group-span a");
+                    var friday = await HtmlParser.GetDayOfWeek(url, $"tbody tr div.pair.lw_5:not(.removed) div.subject", $"tbody tr div.pair.lw_5:not(.removed) div.group span.group-span a");
+                    var satuday = await HtmlParser.GetDayOfWeek(url, $"tbody tr div.pair.lw_6:not(.removed) div.subject", $"tbody tr div.pair.lw_6:not(.removed) div.group span.group-span a");
+                    
                     int maxValue = new int[] { monday.Count, tuesday.Count, wednesday.Count, thursday.Count, friday.Count, satuday.Count }.Max();
                     int indMon = 0, indTues = 0, indWed = 0, indThurs = 0, indFrid = 0, indSat = 0;
                     weekSubjects = new BindingList<WeekSubjects>();
@@ -446,39 +407,25 @@ namespace WpfApp2
 
                         }
                     }
-                    //var teachLogin = teacher.login;
-                    //string projectDir1 = AppDomain.CurrentDomain.BaseDirectory;
-                    //string dir1 = System.IO.Path.Combine(projectDir1, $"Расписание\\{teachLogin}");
-                    //filesInDirectory = Directory.GetFiles(dir1).OrderBy(file1 => File.GetCreationTime(file1)).ToList();
-                    //string json1 = File.ReadAllText(filesInDirectory[indexOfFile]);
-                    //indexOfFile = filesInDirectory.Count - 1;
-                    //weekSubjects = JsonConvert.DeserializeObject<BindingList<WeekSubjects>>(json1);
-                    //FileInfo fileinfo = new FileInfo(filesInDirectory[indexOfFile]);
-                    //this.FileName.Content = $"Файл от {File.GetLastWriteTime(fileinfo.FullName).ToShortDateString()}";
-                    //this.WeekName.Content = $"Неделя с {date1.ToShortDateString()} - {date2.ToShortDateString()}";
                     indexOfFile = filesInDirectory.Count - 1;
                     SourceGrid.ItemsSource = weekSubjects;
                     sourceSave = false;
                 }
                 catch(Exception ex)
                 {
-                    MessageBox.Show("Ошибка соединения с сайтом колледжа.\nПроверьте корректность ссылки.");
+                    MessageBox.Show("Ошибка соединения с сайтом колледжа.\nПроверьте корректность ссылки.", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             else
             {
-                MessageBox.Show("Отсутствует интернет-соединение.");
+                MessageBox.Show("Отсутствует интернет-соединение.", "Внимание", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
-            
         }
-        
-        
-
         private void SaveFile_Click(object sender, RoutedEventArgs e)
         {
             if(weekSubjects != null && weekSubjects.Count > 0)
             {
-                var teachLogin = TeachHoursEntities2.GetContext().Teachers.FirstOrDefault(t => t.id == id).login;
+                var teachLogin = teacher.login;
                 string projectDir = AppDomain.CurrentDomain.BaseDirectory;
                 string dir = System.IO.Path.Combine(projectDir, $"Расписание\\{teachLogin}");
                 string file = fileName;
@@ -574,7 +521,24 @@ namespace WpfApp2
                 MessageBox.Show("Сначала загрузите расписание с сайта колледжа.", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
+        void AddSubjectsToDB(List<string> day, DateTime date)
+        {
+            for (int i = 0; i < day.Count; i++)
+            {
+                Dates dayDate = new Dates();
+                dayDate.date = date;
+                DatesRepository.Add(dayDate);
+                Subjects subject = new Subjects();
+                subject.name = day[i];
+                subject.teacherId = teacher.id;
+                SubjectsRepository.Add(subject);
+                Hours hour = new Hours();
+                hour.dateId = dayDate.id;
+                hour.subjectId = subject.id;
+                hour.teacherId = teacher.id;
+                HoursRepository.Add(hour);
+            }
+        }
         private void SaveDB_Click(object sender, RoutedEventArgs e)
         {
             if (weekSubjects != null && weekSubjects.Count > 0)
@@ -604,132 +568,29 @@ namespace WpfApp2
                                 select i.Saturday).ToList<string>();
                 try
                 {
-                    for (int i = 0; i < monday.Count; i++)
-                    {
-                        Dates mondayDate = new Dates();
-                        mondayDate.date = date;
-                        TeachHoursEntities2.GetContext().Dates.Add(mondayDate);
-                        TeachHoursEntities2.GetContext().SaveChanges();
-                        Subjects subject = new Subjects();
-                        subject.name = monday[i];
-                        subject.teacherId = teacher.id;
-                        TeachHoursEntities2.GetContext().Subjects.Add(subject);
-                        TeachHoursEntities2.GetContext().SaveChanges();
-                        Hours hour = new Hours();
-                        hour.dateId = mondayDate.id;
-                        hour.subjectId = subject.id;
-                        hour.teacherId = teacher.id;
-                        TeachHoursEntities2.GetContext().Hours.Add(hour);
-                        TeachHoursEntities2.GetContext().SaveChanges();
-                    }
+                    AddSubjectsToDB(monday, date);
                     date = date.AddDays(1);
-                    for (int i = 0; i < tuesday.Count; i++)
-                    {
-                        Dates tuesdayDate = new Dates();
-                        tuesdayDate.date = date;
-                        TeachHoursEntities2.GetContext().Dates.Add(tuesdayDate);
-                        TeachHoursEntities2.GetContext().SaveChanges();
-                        Subjects subject = new Subjects();
-                        subject.name = tuesday[i];
-                        subject.teacherId = teacher.id;
-                        TeachHoursEntities2.GetContext().Subjects.Add(subject);
-                        TeachHoursEntities2.GetContext().SaveChanges();
-                        Hours hour = new Hours();
-                        hour.dateId = tuesdayDate.id;
-                        hour.subjectId = subject.id;
-                        hour.teacherId = teacher.id;
-                        TeachHoursEntities2.GetContext().Hours.Add(hour);
-                        TeachHoursEntities2.GetContext().SaveChanges();
-                    }
+                    AddSubjectsToDB(tuesday, date);
                     date = date.AddDays(1);
-                    for (int i = 0; i < wednesday.Count; i++)
-                    {
-                        Dates wednesdayDate = new Dates();
-                        wednesdayDate.date = date;
-                        TeachHoursEntities2.GetContext().Dates.Add(wednesdayDate);
-                        TeachHoursEntities2.GetContext().SaveChanges();
-                        Subjects subject = new Subjects();
-                        subject.name = wednesday[i];
-                        subject.teacherId = teacher.id;
-                        TeachHoursEntities2.GetContext().Subjects.Add(subject);
-                        TeachHoursEntities2.GetContext().SaveChanges();
-                        Hours hour = new Hours();
-                        hour.dateId = wednesdayDate.id;
-                        hour.subjectId = subject.id;
-                        hour.teacherId = teacher.id;
-                        TeachHoursEntities2.GetContext().Hours.Add(hour);
-                        TeachHoursEntities2.GetContext().SaveChanges();
-                    }
+                    AddSubjectsToDB(wednesday, date);
+                    date = date.AddDays(1); 
+                    AddSubjectsToDB(thursday, date);
                     date = date.AddDays(1);
-                    for (int i = 0; i < thursday.Count; i++)
-                    {
-                        Dates thursdayDate = new Dates();
-                        thursdayDate.date = date;
-                        TeachHoursEntities2.GetContext().Dates.Add(thursdayDate);
-                        TeachHoursEntities2.GetContext().SaveChanges();
-                        Subjects subject = new Subjects();
-                        subject.name = thursday[i];
-                        subject.teacherId = teacher.id;
-                        TeachHoursEntities2.GetContext().Subjects.Add(subject);
-                        TeachHoursEntities2.GetContext().SaveChanges();
-                        Hours hour = new Hours();
-                        hour.dateId = thursdayDate.id;
-                        hour.subjectId = subject.id;
-                        hour.teacherId = teacher.id;
-                        TeachHoursEntities2.GetContext().Hours.Add(hour);
-                        TeachHoursEntities2.GetContext().SaveChanges();
-                    }
+                    AddSubjectsToDB(friday, date);
                     date = date.AddDays(1);
-                    for (int i = 0; i < friday.Count; i++)
-                    {
-                        Dates fridayDate = new Dates();
-                        fridayDate.date = date;
-                        TeachHoursEntities2.GetContext().Dates.Add(fridayDate);
-                        TeachHoursEntities2.GetContext().SaveChanges();
-                        Subjects subject = new Subjects();
-                        subject.name = friday[i];
-                        subject.teacherId = teacher.id;
-                        TeachHoursEntities2.GetContext().Subjects.Add(subject);
-                        TeachHoursEntities2.GetContext().SaveChanges();
-                        Hours hour = new Hours();
-                        hour.dateId = fridayDate.id;
-                        hour.subjectId = subject.id;
-                        hour.teacherId = teacher.id;
-                        TeachHoursEntities2.GetContext().Hours.Add(hour);
-                        TeachHoursEntities2.GetContext().SaveChanges();
-                    }
-                    date = date.AddDays(1);
-                    for (int i = 0; i < saturday.Count; i++)
-                    {
-                        Dates saturdayDate = new Dates();
-                        saturdayDate.date = date;
-                        TeachHoursEntities2.GetContext().Dates.Add(saturdayDate);
-                        TeachHoursEntities2.GetContext().SaveChanges();
-                        Subjects subject = new Subjects();
-                        subject.name = saturday[i];
-                        subject.teacherId = teacher.id;
-                        TeachHoursEntities2.GetContext().Subjects.Add(subject);
-                        TeachHoursEntities2.GetContext().SaveChanges();
-                        Hours hour = new Hours();
-                        hour.dateId = saturdayDate.id;
-                        hour.subjectId = subject.id;
-                        hour.teacherId = teacher.id;
-                        TeachHoursEntities2.GetContext().Hours.Add(hour);
-                        TeachHoursEntities2.GetContext().SaveChanges();
-                    }
-                    TeachHoursEntities2.GetContext().SaveChanges();
+                    AddSubjectsToDB(saturday, date);
                     MessageBox.Show("Расписание успешно сохранено.", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
                     UpdateHoursGrid();
                     CreateAllHoursTable();
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show(ex.Message, "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             else
             {
-                MessageBox.Show("Сначала откройте или загрузите расписание.");
+                MessageBox.Show("Сначала откройте или загрузите расписание.", "Внимание", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
@@ -741,38 +602,37 @@ namespace WpfApp2
                 try
                 {
                     List<Hours> remove = (from i in removeHours
-                                          select TeachHoursEntities2.GetContext().Hours.SingleOrDefault(h => h.id == i.Id)).ToList();
+                                          select HoursRepository.GetHourById(i.Id)).ToList();
                     List<Dates> removeDates = (from i in remove
-                                               select TeachHoursEntities2.GetContext().Dates.SingleOrDefault(d => d.id == i.dateId)).ToList();
+                                               select DatesRepository.GetDateById(i.dateId)).ToList();
                     List<Subjects> removeSubjects = (from i in remove
-                                                     select TeachHoursEntities2.GetContext().Subjects.SingleOrDefault(s => s.id == i.subjectId)).ToList();
-                    TeachHoursEntities2.GetContext().Hours.RemoveRange(remove);
-                    TeachHoursEntities2.GetContext().Dates.RemoveRange(removeDates);
-                    TeachHoursEntities2.GetContext().Subjects.RemoveRange(removeSubjects);
-                    TeachHoursEntities2.GetContext().SaveChanges();
+                                                     select SubjectsRepository.GetSubjectById(i.subjectId)).ToList();
+                    HoursRepository.DeleteRange(remove);
+                    DatesRepository.DeleteRange(removeDates);
+                    SubjectsRepository.DeleteRange(removeSubjects);
                     foreach(var hour in removeHours)
                     {
                         allSubjectHours.Remove(hour);
                     }
                     UpdateHoursGrid();
-                    MessageBox.Show("Часы успешно удалены.");
+                    MessageBox.Show("Часы успешно удалены.", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
                     CreateAllHoursTable();
                 }
                 catch(Exception ex)
                 {
-                    MessageBox.Show(ex.Message);    
+                    MessageBox.Show(ex.Message, "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);    
                 }
             }
         }
         public void UpdateHoursGrid()
         {
-            List<Hours> hours = TeachHoursEntities2.GetContext().Hours.Where(h => h.teacherId == teacher.id).ToList();
+            List<Hours> hours = HoursRepository.GetTeacherHours(teacher.id);
             allSubjectHours.Clear();
             foreach (var h in hours)
             {
                 int id = h.id;
-                string subject = TeachHoursEntities2.GetContext().Subjects.SingleOrDefault(s => s.id == h.subjectId).name;
-                DateTime date = TeachHoursEntities2.GetContext().Dates.SingleOrDefault(d => d.id == h.dateId).date;
+                string subject = SubjectsRepository.GetSubjectById(h.subjectId).name;
+                DateTime date = DatesRepository.GetDateById(h.dateId).date;
                 allSubjectHours.Add(new AllSubjectHours(id, date, subject));
             }
             HoursGrid.ItemsSource = allSubjectHours;
@@ -884,93 +744,19 @@ namespace WpfApp2
                 }
                 if(resultReport.Count > 0)
                 {
-                    string projectDir = AppDomain.CurrentDomain.BaseDirectory;
-                    string dir = System.IO.Path.Combine(projectDir, "Отчёты");
-                    var save = new SaveFileDialog
-                    {
-                        Title = "Сохранить файл как",
-                        Filter = "Документы Word (*.docx)|*.docx",
-                        FileName = $"Отчёт.docx",
-                        InitialDirectory = dir
-                    };
-                    string file = $"Отчёт.docx";
-                    if (save.ShowDialog() == true)
-                    {
-                        file = save.FileName;
-                        for (int i = 0; i < resultReport.Count; i++)
-                        {
-                            int sum = 0;
-                            for (int j = 1; j < resultReport[i].Count; j++)
-                            {
-                                string[] temp = resultReport[i][j].Split('-');
-                                if (int.TryParse(temp[1].Trim(), out int num))
-                                {
-                                    sum += num;
-                                }
-                            }
-                            string subName = resultReport[i][0];
-                            var sbj = TeachHoursEntities2.GetContext().AllHours.FirstOrDefault(s=>s.subjectName == subName && s.teacherId == id);
-                            resultReport[i].Add($"Всего часов: {sbj.countHours}");
-                            resultReport[i].Add($"Вычтено: {sum}");
-                            resultReport[i].Add($"Осталось: {sbj.countHours - sum}");
-                            sbj.countHours -= sum;
-                            if(sbj.countHours < 0)
-                            {
-                                sbj.countHours = 0;
-                            }
-                            TeachHoursEntities2.GetContext().SaveChanges();
-                        }
-                        int[] arr = new int[resultReport.Count];
-                        for (int i = 0; i < resultReport.Count; i++)
-                        {
-                            arr[i] = resultReport[i].Count;
-                        }
-                        int max = arr.Max();
-                        Microsoft.Office.Interop.Word.Application word = new Microsoft.Office.Interop.Word.Application();
-                        Microsoft.Office.Interop.Word.Document doc = word.Documents.Add();
-                        doc.PageSetup.PaperSize = WdPaperSize.wdPaperA3;
-                        doc.PageSetup.Orientation = WdOrientation.wdOrientLandscape;
-                        Microsoft.Office.Interop.Word.Paragraph paragraph = doc.Content.Paragraphs.Add();
-                        paragraph.Range.Text = $"Отчёт по отработанным часам за {MonthBox.SelectedItem.ToString()} {YearBox.SelectedItem.ToString()} года.";
-                        paragraph.Range.Font.Size = 16;
-                        paragraph.Range.Font.Bold = 1;
-                        paragraph.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
-                        paragraph.Range.InsertParagraphAfter();
-                        Microsoft.Office.Interop.Word.Range tableRange = doc.Content.Paragraphs.Add().Range;
-                        Microsoft.Office.Interop.Word.Table table = doc.Tables.Add(tableRange, max, resultReport.Count);
-                        table.Borders.Enable = 1;
-                        table.Borders.OutsideLineStyle = WdLineStyle.wdLineStyleSingle;
-                        table.Borders.InsideLineStyle = WdLineStyle.wdLineStyleSingle;
-                        table.AutoFitBehavior(WdAutoFitBehavior.wdAutoFitContent);
-                        table.Rows.Alignment = WdRowAlignment.wdAlignRowCenter;
-                        for (int col = 0; col < resultReport.Count; col++)
-                        {
-                            for (int row = 0; row < resultReport[col].Count; row++)
-                            {
-                                table.Cell(row + 1, col + 1).Range.Text = resultReport[col][row];
-                                table.Cell(row + 1, col + 1).Range.Font.Bold = 0;
-                            }
-                        }
-                        paragraph.Range.Text = $"Дата создания: {DateTime.Now.ToShortDateString()}";
-                        paragraph.Range.Font.Size = 16;
-                        paragraph.Range.Font.Bold = 1;
-                        paragraph.Alignment = WdParagraphAlignment.wdAlignParagraphLeft;
-                        paragraph.Range.InsertParagraphAfter();
-                        doc.SaveAs2(file);
-                        doc.Close();
-                        word.Quit();
-                        CreateAllHoursTable();
-                        MessageBox.Show("Отчёт успешно сохранён!", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
-                    }
+                    WordReport reporter = new WordReport();
+                    reporter.GenerateReport(id, resultReport, MonthBox.SelectedItem.ToString(), YearBox.SelectedItem.ToString());
+                    CreateAllHoursTable();
+                    MessageBox.Show("Отчёт успешно сохранён!", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 else
                 {
-                    MessageBox.Show("Предметов на данный месяц и год не найдено.");
+                    MessageBox.Show("Предметов на данный месяц и год не найдено.", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             else
             {
-                MessageBox.Show("Выберите месяц и год для формирования отчёта.");
+                MessageBox.Show("Выберите месяц и год для формирования отчёта.", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
         public void GetHour(int t)
@@ -1071,7 +857,7 @@ namespace WpfApp2
                     {
                         if (weekSubjects != null && weekSubjects.Count > 0)
                         {
-                            var teachLogin = TeachHoursEntities2.GetContext().Teachers.FirstOrDefault(t=>t.id==id).login;
+                            var teachLogin = teacher.login;
                             string projectDir = AppDomain.CurrentDomain.BaseDirectory;
                             string dir = System.IO.Path.Combine(projectDir, $"Расписание\\{teachLogin}");
                             string file = fileName;
@@ -1085,7 +871,6 @@ namespace WpfApp2
                             string json1 = File.ReadAllText(filesInDirectory[indexOfFile]);
                             weekSubjects = JsonConvert.DeserializeObject<BindingList<WeekSubjects>>(json1);
                             FileInfo fileinfo = new FileInfo(filesInDirectory[indexOfFile]);
-                            //this.FileName.Content = $"Файл от {fileinfo.CreationTime.ToShortDateString()}";
                             this.FileName.Content = $"Файл от {File.GetLastWriteTime(fileinfo.FullName).ToShortDateString()}";
                             SourceGrid.Columns.Clear();
                             SourceGrid.ItemsSource = null;
@@ -1164,7 +949,7 @@ namespace WpfApp2
                         }
                         else
                         {
-                            MessageBox.Show("Сначала откройте или загрузите расписание.");
+                            MessageBox.Show("Сначала откройте или загрузите расписание.", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
                         }
                     }
                     else
@@ -1253,7 +1038,7 @@ namespace WpfApp2
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show($"Ошибка при загрузке данных: {ex.Message}");
+                        MessageBox.Show($"Ошибка при загрузке данных: {ex.Message}", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
             }
@@ -1273,7 +1058,7 @@ namespace WpfApp2
                     {
                         if (weekSubjects != null && weekSubjects.Count > 0)
                         {
-                            var teachLogin = TeachHoursEntities2.GetContext().Teachers.FirstOrDefault(t => t.id == id).login;
+                            var teachLogin = teacher.login;
                             string projectDir = AppDomain.CurrentDomain.BaseDirectory;
                             string dir = System.IO.Path.Combine(projectDir, $"Расписание\\{teachLogin}");
                             string file = fileName;
@@ -1365,7 +1150,7 @@ namespace WpfApp2
                         }
                         else
                         {
-                            MessageBox.Show("Сначала загрузите расписание с сайте колледжа.");
+                            MessageBox.Show("Сначала загрузите расписание с сайте колледжа.", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
                         }
                     }
                     else
@@ -1454,7 +1239,7 @@ namespace WpfApp2
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show($"Ошибка при загрузке данных: {ex.Message}");
+                        MessageBox.Show($"Ошибка при загрузке данных: {ex.Message}", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
             }
@@ -1495,8 +1280,7 @@ namespace WpfApp2
                         h.subjectName = sub;
                         h.countHours = allHoursOfSubject;
                         h.teacherId = id;
-                        TeachHoursEntities2.GetContext().AllHours.Add(h);
-                        TeachHoursEntities2.GetContext().SaveChanges();
+                        AllHoursRepository.Add(h);
                     }
                 }
                 allHours = AllHoursRepository.GetAllHoursOfCurrentTeacher(teacher.id);
@@ -1505,13 +1289,12 @@ namespace WpfApp2
                 {
                     if (!subs.Contains(sub))
                     {
-                        var sb = TeachHoursEntities2.GetContext().AllHours.FirstOrDefault(s => s.teacherId == id && s.subjectName == sub);
-                        TeachHoursEntities2.GetContext().AllHours.Remove(sb);
-                        TeachHoursEntities2.GetContext().SaveChanges();
+                        var sb = AllHoursRepository.GetTeacherHourByName(id, sub);
+                        AllHoursRepository.Delete(sb);
                     }
                 }
             }
-            ResultGrid.ItemsSource = TeachHoursEntities2.GetContext().AllHours.Where(s => s.teacherId == id).ToList();
+            ResultGrid.ItemsSource = AllHoursRepository.GetAllHoursOfCurrentTeacher(id);
         }
         public void CreateTeachFolder(int id)
         {
@@ -1529,22 +1312,21 @@ namespace WpfApp2
             {
                 var button = sender as Button;
                 var hour = button?.DataContext as AllHours;
-                var subj = TeachHoursEntities2.GetContext().AllHours.FirstOrDefault(s => s.id == hour.id);
+                var subj = AllHoursRepository.GetHourById(hour.id);
                 if (hour.countHours < 0)
                 {
-                    MessageBox.Show("Общее кол-во часов не может быть меньше 0");
+                    MessageBox.Show("Общее кол-во часов не может быть меньше 0", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
                 else
                 {
-                    subj.countHours = hour.countHours;
-                    TeachHoursEntities2.GetContext().SaveChanges();
-                    MessageBox.Show("Изменения сохранены!");
+                    AllHoursRepository.ChangeCountOfHours(subj, hour.countHours);
+                    MessageBox.Show("Изменения сохранены!", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
                     CreateAllHoursTable();
                 }
             }
             catch(Exception)
             {
-                MessageBox.Show("Введите корректные данные.");
+                MessageBox.Show("Введите корректные данные.", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -1556,7 +1338,7 @@ namespace WpfApp2
                 {
                     if (weekSubjects != null && weekSubjects.Count > 0)
                     {
-                        var teachLogin = TeachHoursEntities2.GetContext().Teachers.FirstOrDefault(t => t.id == id).login;
+                        var teachLogin = teacher.login;
                         string projectDir = AppDomain.CurrentDomain.BaseDirectory;
                         string dir = System.IO.Path.Combine(projectDir, $"Расписание\\{teachLogin}");
                         string file = fileName;

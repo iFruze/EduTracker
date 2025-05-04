@@ -101,18 +101,20 @@
       <DependentUpon>BaseWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Classes\DatesRepository.cs" />
+    <Compile Include="Classes\HoursRepository.cs" />
     <Compile Include="Classes\HtmlParser.cs" />
     <Compile Include="Classes\PasswordHasher.cs" />
     <Compile Include="Classes\TeachAuth.cs" />
     <Compile Include="Classes\TeachersRepository.cs" />
     <Compile Include="Classes\TeachReg.cs" />
+    <Compile Include="Classes\WordReport.cs" />
     <Compile Include="Dates.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Hours.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Interfaces\ISaver.cs" />
+    <Compile Include="Interfaces\IReporter.cs" />
     <Compile Include="Model.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

@@ -14,6 +14,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WpfApp2.Classes;
 
 namespace WpfApp2
 {
@@ -31,12 +32,12 @@ namespace WpfApp2
         {
             InitializeComponent();
             this.id = teachId;
-            List<Hours> hours = TeachHoursEntities2.GetContext().Hours.Where(h => h.teacherId == id).ToList();
+            List<Hours> hours = HoursRepository.GetTeacherHours(id);
             foreach (var h in hours)
             {
                 int id = h.id;
-                string subject = TeachHoursEntities2.GetContext().Subjects.SingleOrDefault(s => s.id == h.subjectId).name;
-                DateTime date = TeachHoursEntities2.GetContext().Dates.SingleOrDefault(d => d.id == h.dateId).date;
+                string subject = SubjectsRepository.GetSubjectById(h.subjectId).name;
+                DateTime date = DatesRepository.GetDateById(h.dateId).date;
                 allSubjectHours.Add(new AllSubjectHours(id, date, subject));
             }
             List<string> uniqGroups = new List<string>();
@@ -98,17 +99,14 @@ namespace WpfApp2
                         Subjects subjects = new Subjects();
                         subjects.name = $"{GroupBox.Text.Trim()} {NameBox.Text.Trim()}";
                         subjects.teacherId = this.id;
-                        TeachHoursEntities2.GetContext().Subjects.Add(subjects);
-                        TeachHoursEntities2.GetContext().SaveChanges();
+                        SubjectsRepository.Add(subjects);
                         Dates dates = new Dates();
                         dates.date = date;
-                        TeachHoursEntities2.GetContext().Dates.Add(dates);
-                        TeachHoursEntities2.GetContext().SaveChanges();
+                        DatesRepository.Add(dates);
                         hour.subjectId = subjects.id;
                         hour.teacherId = this.id;
                         hour.dateId = dates.id;
-                        TeachHoursEntities2.GetContext().Hours.Add(hour);
-                        TeachHoursEntities2.GetContext().SaveChanges();
+                        HoursRepository.Add(hour);
                     }
                     MessageBox.Show("Час успешно добавлен.", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
                     this.DialogResult = true;

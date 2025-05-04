@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace WpfApp2.Interfaces
 {
-    internal interface ISaver
+    internal interface IReporter
     {
-        void Save();
+        void GenerateReport(int teacherId, List<List<string>> resultReport, string month, string year);
     }
 }
