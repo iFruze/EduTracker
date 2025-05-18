@@ -69,9 +69,9 @@ namespace WpfApp2
                 {
                     errors.Add("Некорретное название группы.\nНазвание должно соответствовать шаблону \"А-000\"");
                 }
-                if(NameBox.Text.Length == 0)
+                if(NameBox.Text.Length == 0 || NameBox.Text.Trim().ToLower().Contains("Урок снят".Trim().ToLower()))
                 {
-                    errors.Add("Некорретное название предмета.\nНазвание предмета не может быть пустым.");
+                    errors.Add("Некорретное название предмета.\nНазвание предмета не может быть пустым.\nПредмет не может называться \"Урок снят\"");
                 }
                 if(datePicker.SelectedDate == null)
                 {
@@ -117,9 +117,7 @@ namespace WpfApp2
             {
                 MessageBox.Show(ex.Message, "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-}
-
-        
+        }
         private void Date_Click(object sender, MouseButtonEventArgs e)
         {
             DateBox.Text = "";

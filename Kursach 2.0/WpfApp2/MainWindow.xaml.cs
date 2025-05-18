@@ -108,10 +108,11 @@ namespace WpfApp2
         {
             this.SecondRegPasText_Box.Password = "";
         }
+
+        private void Spravka_Click(object sender, RoutedEventArgs e)
+        {
+            string helpPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "spravka.chm");
+            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(helpPath) { UseShellExecute = true });
+        }
     }
 }
-
-/*
-Логин: TestUser
-Пароль: UserTest230225
-*/

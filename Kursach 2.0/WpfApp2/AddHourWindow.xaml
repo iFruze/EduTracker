@@ -20,7 +20,7 @@
         </ComboBox>
         <ComboBox IsEditable="True" Name="GroupBox" HorizontalAlignment="Center" Margin="0,86,0,0" VerticalAlignment="Top" Width="212" Height="29" BorderBrush="Black"/>
         <Label Content="Предмет:" HorizontalAlignment="Left" Margin="28,48,0,0" VerticalAlignment="Top"/>
-        <Label Content="Гурппа:" HorizontalAlignment="Left" Margin="35,86,0,0" VerticalAlignment="Top"/>
+        <Label Content="Группа:" HorizontalAlignment="Left" Margin="35,86,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>

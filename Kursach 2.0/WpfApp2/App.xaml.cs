@@ -19,7 +19,7 @@ namespace WpfApp2
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            try
+            try 
             {
                 string connectString = @"Data Source=localhost;Initial Catalog=master;Integrated Security=True";
                 if (!DatabaseExists("TeachHours", connectString))

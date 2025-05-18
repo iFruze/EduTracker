@@ -19,13 +19,13 @@
     "Monday": "Т-292 ПрактПрограм",
     "Tuesday": "Т-292 КПиЯП",
     "Wednesday": "",
-    "Thursday": "Т-291 КПиЯП",
+    "Thursday": "Т-291 ПрактРабПроф",
     "Friday": "Т-292 ПрактРабПроф",
     "Saturday": ""
   },
   {
     "Monday": "Т-292 ПрактПрограм",
-    "Tuesday": "Т-292 КПиЯП",
+    "Tuesday": "Т-292 ПрактРабПроф",
     "Wednesday": "",
     "Thursday": "Т-291 КПиЯП",
     "Friday": "Т-292 ПрактРабПроф",
@@ -36,7 +36,7 @@
     "Tuesday": "Т-291 ПрактПрограм",
     "Wednesday": "",
     "Thursday": "",
-    "Friday": "Т-292 ПрактРабПроф",
+    "Friday": "",
     "Saturday": ""
   },
   {
@@ -44,23 +44,15 @@
     "Tuesday": "Т-291 ПрактПрограм",
     "Wednesday": "",
     "Thursday": "",
-    "Friday": "Т-292 ПрактРабПроф",
+    "Friday": "",
     "Saturday": ""
   },
   {
     "Monday": "",
-    "Tuesday": "",
+    "Tuesday": "Т-291 КураторЧас",
     "Wednesday": "",
     "Thursday": "",
-    "Friday": "Т-291 ПрактРабПроф",
-    "Saturday": ""
-  },
-  {
-    "Monday": "",
-    "Tuesday": "",
-    "Wednesday": "",
-    "Thursday": "",
-    "Friday": "Т-291 КураторЧас",
+    "Friday": "",
     "Saturday": ""
   }
 ]

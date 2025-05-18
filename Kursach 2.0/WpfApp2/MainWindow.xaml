@@ -33,6 +33,7 @@
                 </Grid>
             </TabItem>
         </TabControl>
+        <Button Click="Spravka_Click" Content="Справка" HorizontalAlignment="Left" VerticalAlignment="Top" Width="105" Height="23" Margin="385,0,0,0"/>
 
     </Grid>
 </Window>

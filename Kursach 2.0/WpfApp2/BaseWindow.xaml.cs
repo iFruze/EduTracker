@@ -104,6 +104,7 @@ namespace WpfApp2
                     else
                     {
                         MessageBox.Show("Данные введены неверно.", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
+                        UpdateHoursGrid();
                     }
                 }
                 catch (Exception ex)
@@ -272,6 +273,10 @@ namespace WpfApp2
                 try
                 {
                     var url = this.teacher.url;
+                    if (url!=null && !url.Contains("teacher"))
+                    {
+                        throw new Exception();
+                    }
                     var monday = await HtmlParser.GetDayOfWeek(url, $"tbody tr div.pair.lw_1:not(.removed) div.subject", $"tbody tr div.pair.lw_1:not(.removed) div.group span.group-span a");
                     var tuesday =  await HtmlParser.GetDayOfWeek(url, $"tbody tr div.pair.lw_2:not(.removed) div.subject", $"tbody tr div.pair.lw_2:not(.removed) div.group span.group-span a");
                     var wednesday = await HtmlParser.GetDayOfWeek(url, $"tbody tr div.pair.lw_3:not(.removed) div.subject", $"tbody tr div.pair.lw_3:not(.removed) div.group span.group-span a");
@@ -418,7 +423,7 @@ namespace WpfApp2
                 }
                 catch(Exception ex)
                 {
-                    MessageBox.Show("Ошибка соединения с сайтом колледжа.\nПроверьте корректность ссылки.", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Ошибка соединения с сайтом колледжа.\nПроверьте корректность ссылки.\nСсылка должна указывать на раписание преподавателя.", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             else
@@ -554,22 +559,22 @@ namespace WpfApp2
                     date = date.AddDays(-1);
                 }
                 var monday = (from i in weekSubjects
-                          where i.Monday != ""
+                          where i.Monday != "" && !i.Monday.Trim().ToLower().Contains("Урок снят".Trim().ToLower())
                           select i.Monday).ToList<string>();
                 var tuesday = (from i in weekSubjects
-                               where i.Tuesday != ""
+                               where i.Tuesday != "" && !i.Tuesday.Trim().ToLower().Contains("Урок снят".Trim().ToLower())
                                select i.Tuesday).ToList<string>();
                 var wednesday = (from i in weekSubjects
-                                 where i.Wednesday != ""
+                                 where i.Wednesday != "" && !i.Wednesday.Trim().ToLower().Contains("Урок снят".Trim().ToLower())
                                  select i.Wednesday).ToList<string>();
                 var thursday = (from i in weekSubjects 
-                                where i.Thursday != "" 
+                                where i.Thursday != "" && !i.Thursday.Trim().ToLower().Contains("Урок снят".Trim().ToLower()) 
                                 select i.Thursday).ToList<string>();
                 var friday = (from i in weekSubjects
-                              where i.Friday != ""
+                              where i.Friday != "" && !i.Friday.Trim().ToLower().Contains("Урок снят".Trim().ToLower())
                               select i.Friday).ToList<string>();
                 var saturday = (from i in weekSubjects
-                                where i.Saturday != ""
+                                where i.Saturday != "" && !i.Saturday.Trim().ToLower().Contains("Урок снят".Trim().ToLower())
                                 select i.Saturday).ToList<string>();
                 try
                 {
@@ -1331,7 +1336,7 @@ namespace WpfApp2
             }
             catch(Exception)
             {
-                MessageBox.Show("Введите корректные данные.", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Введите не корректные данные.", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -1353,6 +1358,12 @@ namespace WpfApp2
                     }
                 }
             }
+        }
+
+        private void Spravka_Click(object sender, RoutedEventArgs e)
+        {
+            string helpPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "spravka.chm");
+            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(helpPath) { UseShellExecute = true });
         }
     }
 }

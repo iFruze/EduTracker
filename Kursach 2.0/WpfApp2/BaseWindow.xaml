@@ -226,6 +226,7 @@
                 </Grid>
             </TabItem>
         </TabControl>
+        <Button Click="Spravka_Click" Content="Справка" HorizontalAlignment="Left" Margin="786,0,0,0" VerticalAlignment="Top" Width="105" Height="23"/>
 
     </Grid>
 </Window>
