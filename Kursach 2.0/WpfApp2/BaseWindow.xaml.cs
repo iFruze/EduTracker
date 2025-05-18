@@ -279,6 +279,11 @@ namespace WpfApp2
                     var friday = await HtmlParser.GetDayOfWeek(url, $"tbody tr div.pair.lw_5:not(.removed) div.subject", $"tbody tr div.pair.lw_5:not(.removed) div.group span.group-span a");
                     var satuday = await HtmlParser.GetDayOfWeek(url, $"tbody tr div.pair.lw_6:not(.removed) div.subject", $"tbody tr div.pair.lw_6:not(.removed) div.group span.group-span a");
                     
+                    if(monday == null || tuesday == null || wednesday == null || thursday == null || friday == null || satuday == null)
+                    {
+                        throw new Exception();
+                    }
+
                     int maxValue = new int[] { monday.Count, tuesday.Count, wednesday.Count, thursday.Count, friday.Count, satuday.Count }.Max();
                     int indMon = 0, indTues = 0, indWed = 0, indThurs = 0, indFrid = 0, indSat = 0;
                     weekSubjects = new BindingList<WeekSubjects>();
@@ -590,7 +595,7 @@ namespace WpfApp2
             }
             else
             {
-                MessageBox.Show("Сначала откройте или загрузите расписание.", "Внимание", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Сначала загрузите расписание с сайта колледжа.", "Внимание", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 

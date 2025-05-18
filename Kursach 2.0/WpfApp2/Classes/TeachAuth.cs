@@ -19,7 +19,7 @@ namespace WpfApp2.Classes
         public bool ValidateLogin(Dictionary<string, string> teachers) => teachers.Keys.Contains(login);
         public int ValidatePassword(List<Teachers> teachers)
         {
-            int? teacherId = teachers.FirstOrDefault(teach => teach.login == login && teach.password == hashPassword).id;
+            int? teacherId = teachers.FirstOrDefault(teach => teach.login == login && teach.password == hashPassword)?.id;
             if (teacherId == null)
             {
                 return -1;

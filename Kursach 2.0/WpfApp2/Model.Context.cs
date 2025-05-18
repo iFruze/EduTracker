@@ -24,10 +24,10 @@ namespace WpfApp2
         {
             throw new UnintentionalCodeFirstException();
         }
-        private static TeachHoursEntities2 context;
+        static TeachHoursEntities2 context;
         public static TeachHoursEntities2 GetContext()
         {
-            if (context == null)
+            if(context == null)
             {
                 context = new TeachHoursEntities2();
             }

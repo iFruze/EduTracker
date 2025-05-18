@@ -1,5 +1,6 @@
 ﻿using AngleSharp;
 using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,14 +16,22 @@ namespace WpfApp2.Classes
             var config = Configuration.Default.WithDefaultLoader();
             var context = BrowsingContext.New(config);
             var doc = await context.OpenAsync(url);
-            var day = new List<string>();
-            var links1 = doc.QuerySelectorAll(subjectsTag);
-            var links2 = doc.QuerySelectorAll(groupsTag);
-            for (int j = 0; j < links1.Length; j++)
-            {
-                day.Add($"{links2[j].TextContent} {links1[j].TextContent}");
+            //if(doc.StatusCode == System.Net.HttpStatusCode.OK)
+            if(doc != null)
+                {
+                var day = new List<string>();
+                var links1 = doc.QuerySelectorAll(subjectsTag);
+                var links2 = doc.QuerySelectorAll(groupsTag);
+                for (int j = 0; j < links1.Length; j++)
+                {
+                    day.Add($"{links2[j].TextContent} {links1[j].TextContent}");
+                }
+                return day;
             }
-            return day;
+            else
+            {
+                return null;
+            }
         }
     }
 }
