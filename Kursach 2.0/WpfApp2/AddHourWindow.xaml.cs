@@ -77,9 +77,9 @@ namespace WpfApp2
                 {
                     errors.Add("Некорректная дата.");
                 }
-                if(!(int.TryParse(DateBox.Text, out int count) == true && count >= 1 && count <= 16))
+                if(!(int.TryParse(DateBox.Text, out int count) == true && count >= 1 && count <= 200))
                 {
-                    errors.Add("Некорректное количество часов. Часы должны находиться в диапазоне от 1 до 16.");
+                    errors.Add("Некорректное количество часов. Часы должны находиться в диапазоне от 1 до 200.");
                 }
                 if(errors.Count > 0)
                 {

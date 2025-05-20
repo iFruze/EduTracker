@@ -41,7 +41,7 @@ namespace WpfApp2
             try
             {
                 int t = Convert.ToInt32(this.TextBox.Text);
-                if (t <= 0 || t > 200)
+                if (t <= 0 || t > 1200)
                 {
                     throw new Exception();
                 }

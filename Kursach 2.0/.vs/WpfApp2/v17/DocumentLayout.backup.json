@@ -3,27 +3,39 @@
   "WorkspaceRootPath": "C:\\Users\\iFruze\\Desktop\\GITKursach\\Kursach 2.0\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{1F0F0F50-B181-4467-A2A1-477E49143072}|WpfApp2\\WpfApp2.csproj|c:\\users\\ifruze\\desktop\\gitkursach\\kursach 2.0\\wpfapp2\\basewindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{1F0F0F50-B181-4467-A2A1-477E49143072}|WpfApp2\\WpfApp2.csproj|c:\\users\\ifruze\\desktop\\gitkursach\\kursach 2.0\\wpfapp2\\addhourwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1F0F0F50-B181-4467-A2A1-477E49143072}|WpfApp2\\WpfApp2.csproj|solutionrelative:wpfapp2\\addhourwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1F0F0F50-B181-4467-A2A1-477E49143072}|WpfApp2\\WpfApp2.csproj|C:\\Users\\iFruze\\Desktop\\GITKursach\\Kursach 2.0\\wpfapp2\\basewindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1F0F0F50-B181-4467-A2A1-477E49143072}|WpfApp2\\WpfApp2.csproj|solutionrelative:wpfapp2\\basewindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1F0F0F50-B181-4467-A2A1-477E49143072}|WpfApp2\\WpfApp2.csproj|c:\\users\\ifruze\\desktop\\gitkursach\\kursach 2.0\\wpfapp2\\basewindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "AbsoluteMoniker": "D:0:0:{1F0F0F50-B181-4467-A2A1-477E49143072}|WpfApp2\\WpfApp2.csproj|C:\\Users\\iFruze\\Desktop\\GITKursach\\Kursach 2.0\\wpfapp2\\app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1F0F0F50-B181-4467-A2A1-477E49143072}|WpfApp2\\WpfApp2.csproj|solutionrelative:wpfapp2\\app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1F0F0F50-B181-4467-A2A1-477E49143072}|WpfApp2\\WpfApp2.csproj|C:\\Users\\iFruze\\Desktop\\GITKursach\\Kursach 2.0\\wpfapp2\\allhoursofsubjects.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1F0F0F50-B181-4467-A2A1-477E49143072}|WpfApp2\\WpfApp2.csproj|solutionrelative:wpfapp2\\allhoursofsubjects.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1F0F0F50-B181-4467-A2A1-477E49143072}|WpfApp2\\WpfApp2.csproj|C:\\Users\\iFruze\\Desktop\\GITKursach\\Kursach 2.0\\wpfapp2\\basewindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{1F0F0F50-B181-4467-A2A1-477E49143072}|WpfApp2\\WpfApp2.csproj|solutionrelative:wpfapp2\\basewindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1F0F0F50-B181-4467-A2A1-477E49143072}|WpfApp2\\WpfApp2.csproj|c:\\users\\ifruze\\desktop\\gitkursach\\kursach 2.0\\wpfapp2\\addhourwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "AbsoluteMoniker": "D:0:0:{1F0F0F50-B181-4467-A2A1-477E49143072}|WpfApp2\\WpfApp2.csproj|C:\\Users\\iFruze\\Desktop\\GITKursach\\Kursach 2.0\\wpfapp2\\addhourwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{1F0F0F50-B181-4467-A2A1-477E49143072}|WpfApp2\\WpfApp2.csproj|solutionrelative:wpfapp2\\addhourwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1F0F0F50-B181-4467-A2A1-477E49143072}|WpfApp2\\WpfApp2.csproj|c:\\users\\ifruze\\desktop\\gitkursach\\kursach 2.0\\wpfapp2\\dates.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{1F0F0F50-B181-4467-A2A1-477E49143072}|WpfApp2\\WpfApp2.csproj|C:\\Users\\iFruze\\Desktop\\GITKursach\\Kursach 2.0\\wpfapp2\\dates.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1F0F0F50-B181-4467-A2A1-477E49143072}|WpfApp2\\WpfApp2.csproj|solutionrelative:wpfapp2\\dates.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1F0F0F50-B181-4467-A2A1-477E49143072}|WpfApp2\\WpfApp2.csproj|c:\\users\\ifruze\\desktop\\gitkursach\\kursach 2.0\\wpfapp2\\allhours.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{1F0F0F50-B181-4467-A2A1-477E49143072}|WpfApp2\\WpfApp2.csproj|C:\\Users\\iFruze\\Desktop\\GITKursach\\Kursach 2.0\\wpfapp2\\allhours.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1F0F0F50-B181-4467-A2A1-477E49143072}|WpfApp2\\WpfApp2.csproj|solutionrelative:wpfapp2\\allhours.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1F0F0F50-B181-4467-A2A1-477E49143072}|WpfApp2\\WpfApp2.csproj|c:\\users\\ifruze\\desktop\\gitkursach\\kursach 2.0\\wpfapp2\\subjects.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{1F0F0F50-B181-4467-A2A1-477E49143072}|WpfApp2\\WpfApp2.csproj|C:\\Users\\iFruze\\Desktop\\GITKursach\\Kursach 2.0\\wpfapp2\\subjects.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1F0F0F50-B181-4467-A2A1-477E49143072}|WpfApp2\\WpfApp2.csproj|solutionrelative:wpfapp2\\subjects.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -34,7 +46,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Bookmark",
@@ -42,44 +54,78 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
+              "Title": "AddHourWindow.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\iFruze\\Desktop\\GITKursach\\Kursach 2.0\\WpfApp2\\AddHourWindow.xaml.cs",
+              "RelativeDocumentMoniker": "WpfApp2\\AddHourWindow.xaml.cs",
+              "ToolTip": "C:\\Users\\iFruze\\Desktop\\GITKursach\\Kursach 2.0\\WpfApp2\\AddHourWindow.xaml.cs",
+              "RelativeToolTip": "WpfApp2\\AddHourWindow.xaml.cs",
+              "ViewState": "AgIAAEQAAAAAAAAAAAAgwFsAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-19T05:09:46.644Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "App.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\iFruze\\Desktop\\GITKursach\\Kursach 2.0\\WpfApp2\\App.xaml.cs",
+              "RelativeDocumentMoniker": "WpfApp2\\App.xaml.cs",
+              "ToolTip": "C:\\Users\\iFruze\\Desktop\\GITKursach\\Kursach 2.0\\WpfApp2\\App.xaml.cs",
+              "RelativeToolTip": "WpfApp2\\App.xaml.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-19T05:08:14.021Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "BaseWindow.xaml",
               "DocumentMoniker": "C:\\Users\\iFruze\\Desktop\\GITKursach\\Kursach 2.0\\WpfApp2\\BaseWindow.xaml",
               "RelativeDocumentMoniker": "WpfApp2\\BaseWindow.xaml",
               "ToolTip": "C:\\Users\\iFruze\\Desktop\\GITKursach\\Kursach 2.0\\WpfApp2\\BaseWindow.xaml",
               "RelativeToolTip": "WpfApp2\\BaseWindow.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-05-18T17:08:45.047Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-18T17:08:45.047Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "BaseWindow.xaml.cs",
               "DocumentMoniker": "C:\\Users\\iFruze\\Desktop\\GITKursach\\Kursach 2.0\\WpfApp2\\BaseWindow.xaml.cs",
               "RelativeDocumentMoniker": "WpfApp2\\BaseWindow.xaml.cs",
               "ToolTip": "C:\\Users\\iFruze\\Desktop\\GITKursach\\Kursach 2.0\\WpfApp2\\BaseWindow.xaml.cs",
               "RelativeToolTip": "WpfApp2\\BaseWindow.xaml.cs",
-              "ViewState": "AgIAAIkBAAAAAAAAAAAIwJYBAAAZAAAAAAAAAA==",
+              "ViewState": "AgIAAD8FAAAAAAAAAAAmwFEFAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-18T17:08:41.798Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-18T17:08:41.798Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
+              "Title": "AllHoursOfSubjects.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\iFruze\\Desktop\\GITKursach\\Kursach 2.0\\WpfApp2\\AllHoursOfSubjects.xaml.cs",
+              "RelativeDocumentMoniker": "WpfApp2\\AllHoursOfSubjects.xaml.cs",
+              "ToolTip": "C:\\Users\\iFruze\\Desktop\\GITKursach\\Kursach 2.0\\WpfApp2\\AllHoursOfSubjects.xaml.cs",
+              "RelativeToolTip": "WpfApp2\\AllHoursOfSubjects.xaml.cs",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAYwDEAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-19T05:10:02.893Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
               "Title": "AddHourWindow.xaml",
               "DocumentMoniker": "C:\\Users\\iFruze\\Desktop\\GITKursach\\Kursach 2.0\\WpfApp2\\AddHourWindow.xaml",
               "RelativeDocumentMoniker": "WpfApp2\\AddHourWindow.xaml",
               "ToolTip": "C:\\Users\\iFruze\\Desktop\\GITKursach\\Kursach 2.0\\WpfApp2\\AddHourWindow.xaml",
               "RelativeToolTip": "WpfApp2\\AddHourWindow.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-05-18T17:05:10.085Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-18T17:05:10.085Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 6,
               "Title": "Dates.cs",
               "DocumentMoniker": "C:\\Users\\iFruze\\Desktop\\GITKursach\\Kursach 2.0\\WpfApp2\\Dates.cs",
               "RelativeDocumentMoniker": "WpfApp2\\Dates.cs",
@@ -87,12 +133,11 @@
               "RelativeToolTip": "WpfApp2\\Dates.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-18T17:04:32.765Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-18T17:04:32.765Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 7,
               "Title": "AllHours.cs",
               "DocumentMoniker": "C:\\Users\\iFruze\\Desktop\\GITKursach\\Kursach 2.0\\WpfApp2\\AllHours.cs",
               "RelativeDocumentMoniker": "WpfApp2\\AllHours.cs",
@@ -100,12 +145,11 @@
               "RelativeToolTip": "WpfApp2\\AllHours.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-18T17:03:49.73Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-18T17:03:49.73Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 8,
               "Title": "Subjects.cs",
               "DocumentMoniker": "C:\\Users\\iFruze\\Desktop\\GITKursach\\Kursach 2.0\\WpfApp2\\Subjects.cs",
               "RelativeDocumentMoniker": "WpfApp2\\Subjects.cs",
@@ -113,8 +157,7 @@
               "RelativeToolTip": "WpfApp2\\Subjects.cs",
               "ViewState": "AgIAABMAAAAAAAAAAAAQwB8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-18T17:02:58.471Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-18T17:02:58.471Z"
             }
           ]
         }
