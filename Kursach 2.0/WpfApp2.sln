@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfApp2", "WpfApp2\WpfApp2.
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Setup.vdproj", "{3B7C2646-B82B-4F54-B185-5A24E564CD13}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "LAb30", "LAb30\LAb30.vdproj", "{A1FA2B30-5048-4F8C-A402-3A77A39C070E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +21,8 @@ Global
 		{1F0F0F50-B181-4467-A2A1-477E49143072}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3B7C2646-B82B-4F54-B185-5A24E564CD13}.Debug|Any CPU.ActiveCfg = Debug
 		{3B7C2646-B82B-4F54-B185-5A24E564CD13}.Release|Any CPU.ActiveCfg = Release
+		{A1FA2B30-5048-4F8C-A402-3A77A39C070E}.Debug|Any CPU.ActiveCfg = Debug
+		{A1FA2B30-5048-4F8C-A402-3A77A39C070E}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -48,7 +48,7 @@ namespace WpfApp2
                 temp(t);
                 this.Close();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 MessageBox.Show("Некорректные данные.", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
             }
